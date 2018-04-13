@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting;
+package pl.coderstrust.accounting.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
