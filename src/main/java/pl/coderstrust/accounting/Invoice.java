@@ -18,10 +18,13 @@ public class Invoice {
 
 
   public Integer getId() {
+
     return id;
+
   }
 
   public BigDecimal getNetValue() {
+
     for (InvoiceEntry entry : entries){
 
     }
