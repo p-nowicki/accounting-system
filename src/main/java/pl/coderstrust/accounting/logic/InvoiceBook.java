@@ -1,7 +1,7 @@
 package pl.coderstrust.accounting.logic;
 
-import pl.coderstrust.accounting.model.Invoice;
 import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -25,7 +25,7 @@ public class Invoice {
 
   public BigDecimal getNetValue() {
 
-    for (InvoiceEntry entry : entries){
+    for (InvoiceEntry entry : entries) {
 
     }
     return null;
