@@ -1,6 +1,6 @@
 package database;
 
-    import java.util.Collection;
+import java.util.Collection;
 
 public interface Database {
 
