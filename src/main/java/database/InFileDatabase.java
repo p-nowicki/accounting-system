@@ -6,23 +6,34 @@ import java.util.Map;
 
 public class InFileDatabase implements Database {
 
-  private final Map<Integer, Invoice> invoces = new HashMap<>();
+  private Map<Integer, Invoice> invoices = new HashMap<>();
+  private FileHelper fileHelper;
+
+  public InFileDatabase(FileHelper fileHelper) {
+    this.fileHelper = fileHelper;
+  }
 
   public void saveInvoice(Invoice invoice) {
-    invoces.put(invoice.getId(), invoice);
+
+    invoices.put(invoice.getId(), invoice);
+
   }
 
   public Collection<Invoice> getInvoices() {
 
-    return null;
+    return invoices.values();
+
   }
 
-  @Override
   public void updateInvoice(Invoice invoice) {
+
+    invoices.put(invoice.getId(), invoice);
 
   }
 
   public void removeInvoiceById(int id) {
-    invoces.remove(id);
+
+    invoices.remove(id);
+
   }
 }
