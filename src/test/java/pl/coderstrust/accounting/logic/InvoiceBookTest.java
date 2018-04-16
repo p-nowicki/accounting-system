@@ -4,7 +4,6 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import pl.coderstrust.accounting.database.Database;
-import pl.coderstrust.accounting.model.Invoice;
 
 public class InvoiceBookTest {
 
@@ -15,7 +14,7 @@ public class InvoiceBookTest {
     Database database = mock(Database.class);
 
     new InvoiceBook(database);
-    
+
   }
 
 }

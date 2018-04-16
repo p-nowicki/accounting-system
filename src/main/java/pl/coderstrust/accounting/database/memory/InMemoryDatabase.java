@@ -16,8 +16,7 @@ public class InMemoryDatabase implements Database {
   }
 
   public Collection<Invoice> getInvoices() {
-
-    return null;
+    return invoices.values();
   }
 
   public void updateInvoice(Invoice invoice) {
