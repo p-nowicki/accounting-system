@@ -22,26 +22,11 @@ public class FileHelper {
     return line;
   }
 
-  public void writeFile(String id, String file) {
-    BufferedWriter writer = null;
-    try {
-
-      File logFile = new File("src/main/resources/file/newFile.txt");
-      System.out.println(logFile.getCanonicalPath());
-
-      writer = new BufferedWriter(new FileWriter(logFile, true));
-      writer.write(" Id number: " + id + " File name: " + file);
-
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    } finally {
-      try {
-        if (writer != null) {
-          writer.close();
-        }
-      } catch (IOException exception) {
-        exception.printStackTrace();
-      }
+  public void writeFile(String fileName, String line) throws IOException {
+    try (
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
+      bufferedWriter.write(String.valueOf(line));
+      bufferedWriter.newLine();
     }
   }
 }
