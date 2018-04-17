@@ -20,15 +20,15 @@ public class PathHelper {
     this.rootPath = rootPath;
   }
 
-  public String getInvoiceYear(Invoice invoice) {
+  private String getInvoiceYear(Invoice invoice) {
     return String.valueOf(invoice.getIssueDate().getYear());
   }
 
-  public String getInvoiceMonth(Invoice invoice) {
+  private String getInvoiceMonth(Invoice invoice) {
     return invoice.getIssueDate().getMonth().toString().toLowerCase();
   }
 
-  public String getInvoiceDay(Invoice invoice) {
+  private String getInvoiceDay(Invoice invoice) {
     return String.valueOf(invoice.getIssueDate().getDayOfMonth());
   }
 
