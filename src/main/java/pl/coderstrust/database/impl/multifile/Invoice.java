@@ -29,7 +29,5 @@ public class Invoice {
   public void setIssueDate(LocalDate issueDate) {
     this.issueDate = issueDate;
   }
-
-
 }
 
