@@ -18,11 +18,5 @@ public interface DatabaseForMultiFile {
 
   List<Invoice> getInvoices() throws IOException;
 
-  default List<Invoice> getInvoicesWithinDateRange(LocalDate fromDate, LocalDate toDate) throws IOException {
-    return getInvoices().stream()
-        .filter(invoice -> invoice.getIssueDate().isAfter(fromDate) && invoice.getIssueDate().isBefore(toDate))
-        .collect(Collectors.toList());
-  }
-
   void deleteInvoice(int id) throws InvoiceNotFoundException, IOException;
 }

@@ -66,6 +66,7 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
     if (Objects.isNull(fileCache.get(id))) {
       return Optional.empty();
     }
+
     File file = new File(fileCache.get(id));
     return fileHelper.readInvoicesFromFile(file)
         .stream()
