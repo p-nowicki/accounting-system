@@ -25,29 +25,19 @@ public class FileHelperForMultiFileDatabase {
   }
 
   private String convertInvoiceToJson(Invoice invoice) throws JsonProcessingException {
-    return mapper.writeValueAsString(invoice);
+    return "";
   }
 
   private Invoice convertJsonToInvoice(String invoiceAsString) throws IOException {
-    return mapper.readValue(invoiceAsString, Invoice.class);
+    return null;
   }
 
   public int saveInvoiceToFile(Invoice invoice, File file) throws IOException {
-    String invoiceAsString = convertInvoiceToJson(invoice);
-    Files.write(file.toPath(), (invoiceAsString + System.lineSeparator()).getBytes(Charset.forName("UTF-8")),
-        StandardOpenOption.APPEND);
-    return invoice.getId();
+    return -1;
   }
 
   public List<Invoice> readInvoicesFromFile(File file) throws IOException {
-    List<Invoice> invoiceList = new ArrayList<>();
-    try (Scanner sc = new Scanner(file)) {
-      while (sc.hasNext()) {
-        Invoice invoice = convertJsonToInvoice(sc.nextLine());
-        invoiceList.add(invoice);
-      }
-      return invoiceList;
-    }
+      return new ArrayList<>();
   }
 
   public int generateNextId() throws IOException {
