@@ -3,10 +3,8 @@ package pl.coderstrust.database.impl.multifile;
 import pl.coderstrust.exceptions.InvoiceNotFoundException;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public interface DatabaseForMultiFile {
 
