@@ -18,8 +18,8 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   private Map<Integer, String> fileCache;
   private String rootPath;
 
-  public MultiFileDatabase(String rootPath, String currentIdFilePath) throws IOException {
-    this.fileHelper = new FileHelperForMultiFileDatabase(currentIdFilePath);
+  public MultiFileDatabase(String rootPath, FileHelperForMultiFileDatabase fileHelper) throws IOException {
+    this.fileHelper = fileHelper;
     this.pathHelper = new PathHelper(rootPath);
     this.rootPath = rootPath;
     this.fileCache = initializeFileCache();
@@ -78,11 +78,11 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   public void deleteInvoice(int id) throws InvoiceNotFoundException, IOException {
     isInvoiceInDatabase(id);
 
-    List<Invoice> invoiceList = getInvoices();
-
     String filePath = fileCache.get(id);
-    fileCache.remove(id);
     File file = new File(filePath);
+    List<Invoice> invoiceList = fileHelper.readInvoicesFromFile(new File(fileCache.get(id)));
+
+    fileCache.remove(id);
     file.delete();
 
     invoiceList

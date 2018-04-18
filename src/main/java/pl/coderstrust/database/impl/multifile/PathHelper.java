@@ -44,7 +44,6 @@ public class PathHelper {
 
   public String getPathToDirectory(Invoice invoice) {
     return new StringBuilder(rootPath)
-
         .append(getInvoiceYear(invoice) + "/")
         .append(getInvoiceMonth(invoice) + "/")
         .toString();
@@ -58,8 +57,7 @@ public class PathHelper {
 
   public List<File> listFiles(String path) {
     File source = new File(path);
-    List<File> files = (List<File>) FileUtils.listFiles(source, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-    return files;
+    return (List<File>) FileUtils.listFiles(source, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
   }
 
   public boolean pathExists(String path) {
