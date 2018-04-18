@@ -11,13 +11,13 @@ public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();
 
-  public void saveInvoice(Invoice invoice) {
+  public void saveInvoice(Invoice invoice) { // dodaje do mapy i sprawdzam czy zwroci get
+
     invoices.put(invoice.getId(), invoice);
   }
 
   public Collection<Invoice> getInvoices() {
-
-    return null;
+    return invoices.values();
   }
 
   public void updateInvoice(Invoice invoice) {

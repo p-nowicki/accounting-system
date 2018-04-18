@@ -13,6 +13,7 @@ public class InFileDatabaseTest extends DatabaseTest {
 
   @Test
   public void shouldCreateFileWhenInvoiceAdded() {
+
     new InFileDatabase();
   }
 

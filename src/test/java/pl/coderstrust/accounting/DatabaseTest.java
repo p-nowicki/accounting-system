@@ -14,7 +14,6 @@ public abstract class DatabaseTest {
     Database db = getDatabase();
     db.saveInvoice(new Invoice());
 
-
   }
 
 }
