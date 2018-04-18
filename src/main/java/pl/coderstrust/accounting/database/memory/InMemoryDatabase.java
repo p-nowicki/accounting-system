@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting;
+package pl.coderstrust.accounting.database.memory;
 
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
@@ -10,10 +10,11 @@ import java.util.Map;
 public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();
+  private int id = 0;
 
-  public void saveInvoice(Invoice invoice) { // dodaje do mapy i sprawdzam czy zwroci get
-
-    invoices.put(invoice.getId(), invoice);
+  public void saveInvoice(Invoice invoice) {
+    invoice.setId(id);
+    invoices.put(id++, invoice);
   }
 
   public Collection<Invoice> getInvoices() {
