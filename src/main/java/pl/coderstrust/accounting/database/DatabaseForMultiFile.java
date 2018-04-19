@@ -1,6 +1,7 @@
-package pl.coderstrust.database.impl.multifile;
+package pl.coderstrust.accounting.database;
 
-import pl.coderstrust.exceptions.InvoiceNotFoundException;
+import pl.coderstrust.accounting.database.impl.multifile.Invoice;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 
 import java.io.IOException;
 import java.util.List;

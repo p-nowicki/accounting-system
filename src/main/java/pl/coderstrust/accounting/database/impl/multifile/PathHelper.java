@@ -1,4 +1,4 @@
-package pl.coderstrust.database.impl.multifile;
+package pl.coderstrust.accounting.database.impl.multifile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;

@@ -1,4 +1,4 @@
-package pl.coderstrust.exceptions;
+package pl.coderstrust.accounting.exceptions;
 
 public class InvoiceNotFoundException extends Exception {
 
