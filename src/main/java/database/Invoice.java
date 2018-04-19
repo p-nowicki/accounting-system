@@ -3,19 +3,15 @@ package database;
 public class Invoice {
 
   private String name;
+  private int age;
   private int id;
 
-  public Invoice(String name, int id) {
+  Invoice() {
+  }
+
+  Invoice(String name, int age) {
     this.name = name;
-    this.id = id;
-  }
-
-  public Invoice() {
-
-  }
-
-  private Invoice(String id) {
-
+    this.age = age;
   }
 
   public String getName() {
@@ -26,6 +22,14 @@ public class Invoice {
     this.name = name;
   }
 
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
   public int getId() {
     return id;
   }
@@ -33,4 +37,5 @@ public class Invoice {
   public void setId(int id) {
     this.id = id;
   }
+
 }
