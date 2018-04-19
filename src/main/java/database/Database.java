@@ -6,11 +6,12 @@ import java.util.Collection;
 
 public interface Database {
 
-  void saveInvoice(String invoice) throws IOException;
+  void saveInvoice(Invoice invoice) throws IOException;
 
-  Collection<String> getInvoices() throws FileNotFoundException;
+  Collection<Invoice> getInvoices() throws FileNotFoundException;
 
   void updateInvoice(Invoice invoice) throws IOException;
 
-  void removeInvoiceById(int id);
+  void removeInvoiceById(int id) throws IOException;
+
 }
