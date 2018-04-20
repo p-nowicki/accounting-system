@@ -1,41 +1,53 @@
 package pl.coderstrust.accounting.database;
 
+import pl.coderstrust.accounting.database.impl.multifile.FileHelper;
+import pl.coderstrust.accounting.database.impl.multifile.Invoice;
+import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
+
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-import java.util.Scanner;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IdGenerator {
 
   private static AtomicInteger currentId;
-  private String currentIdFilePath;
 
-  public IdGenerator(String currentIdFilePath) throws IOException {
-    this.currentIdFilePath = currentIdFilePath;
-    currentId = new AtomicInteger(getCurrentId(new File(currentIdFilePath)));
+  public IdGenerator(String path) throws IOException {
+    currentId = new AtomicInteger(getCurrentId(path).orElseGet(() -> 0));
   }
 
-  public int generateNextId() throws IOException {
-    currentId.addAndGet(1);
-    File file = new File(currentIdFilePath);
-    Files.write(file.toPath(), String.valueOf(currentId).getBytes(Charset.forName("UTF-8")), StandardOpenOption.WRITE);
+  public int generateNextId() {
+    currentId.incrementAndGet();
     return currentId.get();
   }
 
-  private int getCurrentId(File file) throws IOException {
-    if (!file.exists()) {
-      file.createNewFile();
-    }
-
-    try (Scanner sc = new Scanner(file)) {
-      while (sc.hasNext()) {
-        return sc.nextInt();
-      }
-    }
-    return 0;
+  private OptionalInt getCurrentId(String path) throws IOException {
+    return Files.isRegularFile(Paths.get(path))
+        ? getCurrentIdFromOneFile(path)
+        : getCurrentIdFromMultiFile(path);
   }
 
+  private OptionalInt getCurrentIdFromOneFile(String path) throws IOException {
+    return new FileHelper()
+        .readInvoicesFromFile(new File(path))
+        .stream()
+        .mapToInt(inv -> inv.getId())
+        .max();
+  }
+
+  private OptionalInt getCurrentIdFromMultiFile(String path) throws IOException {
+    List<Invoice> invoiceList = new ArrayList<>();
+    List<File> files = new PathHelper(path).listFiles(path);
+    for (File file : files) {
+      invoiceList.addAll(new FileHelper().readInvoicesFromFile(file));
+    }
+    return invoiceList.stream()
+        .mapToInt(inv -> inv.getId())
+        .max();
+  }
 }

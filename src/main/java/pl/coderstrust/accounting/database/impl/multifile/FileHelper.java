@@ -16,7 +16,7 @@ public class FileHelper {
 
   private ObjectMapperHelper mapper;
 
-  public FileHelper(String currentIdFilePath) throws IOException {
+  public FileHelper() {
     this.mapper = new ObjectMapperHelper();
   }
 
