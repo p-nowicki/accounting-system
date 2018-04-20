@@ -30,44 +30,44 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   }
 
   @Override
-  public int saveInvoice(pl.coderstrust.accounting.database.impl.multifile.Invoice invoice) throws IOException {
-    String pathToDirectory = pathHelper.getPathToDirectory(invoice);
+  public int saveInvoice(InvoiceForMultifile invoiceForMultifile) throws IOException {
+    String pathToDirectory = pathHelper.getPathToDirectory(invoiceForMultifile);
     if (!pathHelper.pathExists(pathToDirectory)) {
       pathHelper.createFolder(pathToDirectory);
     }
 
-    if (invoice.getId() == 0) {
-      invoice.setId(idGenerator.generateNextId());
+    if (invoiceForMultifile.getId() == 0) {
+      invoiceForMultifile.setId(idGenerator.generateNextId());
     }
-    String filePath = pathHelper.getPathToFile(invoice);
-    fileCache.put(invoice.getId(), filePath);
+    String filePath = pathHelper.getPathToFile(invoiceForMultifile);
+    fileCache.put(invoiceForMultifile.getId(), filePath);
 
     if (pathHelper.pathExists(filePath)) {
-      return fileHelper.saveInvoiceToFile(invoice, new File(filePath));
+      return fileHelper.saveInvoiceToFile(invoiceForMultifile, new File(filePath));
     }
     pathHelper.createFile(filePath);
-    return fileHelper.saveInvoiceToFile(invoice, new File(filePath));
+    return fileHelper.saveInvoiceToFile(invoiceForMultifile, new File(filePath));
   }
 
   @Override
-  public int updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException {
-    isInvoiceInDatabase(invoice.getId());
-    deleteInvoice(invoice.getId());
-    return saveInvoice(invoice);
+  public int updateInvoice(InvoiceForMultifile invoiceForMultifile) throws InvoiceNotFoundException, IOException {
+    isInvoiceInDatabase(invoiceForMultifile.getId());
+    deleteInvoice(invoiceForMultifile.getId());
+    return saveInvoice(invoiceForMultifile);
   }
 
   @Override
-  public List<Invoice> getInvoices() throws IOException {
-    List<Invoice> invoiceList = new ArrayList<>();
+  public List<InvoiceForMultifile> getInvoices() throws IOException {
+    List<InvoiceForMultifile> invoiceForMultifileList = new ArrayList<>();
     List<File> files = pathHelper.listFiles(path);
     for (File file : files) {
-      invoiceList.addAll(fileHelper.readInvoicesFromFile(file));
+      invoiceForMultifileList.addAll(fileHelper.readInvoicesFromFile(file));
     }
-    return invoiceList;
+    return invoiceForMultifileList;
   }
 
   @Override
-  public Optional<Invoice> getInvoiceById(int id) throws IOException {
+  public Optional<InvoiceForMultifile> getInvoiceById(int id) throws IOException {
     if (Objects.isNull(fileCache.get(id))) {
       return Optional.empty();
     }
@@ -84,12 +84,12 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
     isInvoiceInDatabase(id);
 
     File file = new File(fileCache.get(id));
-    List<Invoice> invoiceList = fileHelper.readInvoicesFromFile(file);
+    List<InvoiceForMultifile> invoiceForMultifileList = fileHelper.readInvoicesFromFile(file);
 
     fileCache.remove(id);
     file.delete();
 
-    invoiceList
+    invoiceForMultifileList
         .stream()
         .filter(invoice -> invoice.getId() != id)
         .forEach(invoice -> {
@@ -103,7 +103,7 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
 
   private void isInvoiceInDatabase(int id) throws InvoiceNotFoundException {
     if (!fileCache.containsKey(id)) {
-      throw new InvoiceNotFoundException("Invoice not in database.");
+      throw new InvoiceNotFoundException("InvoiceForMultifile not in database.");
     }
   }
 

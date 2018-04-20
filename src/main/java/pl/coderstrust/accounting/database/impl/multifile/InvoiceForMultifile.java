@@ -2,15 +2,15 @@ package pl.coderstrust.accounting.database.impl.multifile;
 
 import java.time.LocalDate;
 
-public class Invoice {
+public class InvoiceForMultifile {
 
   private int id;
   private LocalDate issueDate;
 
-  public Invoice() {
+  public InvoiceForMultifile() {
   }
 
-  public Invoice(LocalDate issueDate) {
+  public InvoiceForMultifile(LocalDate issueDate) {
     this.issueDate = issueDate;
   }
 

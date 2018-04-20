@@ -20,16 +20,16 @@ public class PathHelper {
     this.rootPath = rootPath;
   }
 
-  private String getInvoiceYear(Invoice invoice) {
-    return String.valueOf(invoice.getIssueDate().getYear());
+  private String getInvoiceYear(InvoiceForMultifile invoiceForMultifile) {
+    return String.valueOf(invoiceForMultifile.getIssueDate().getYear());
   }
 
-  private String getInvoiceMonth(Invoice invoice) {
-    return invoice.getIssueDate().getMonth().toString().toLowerCase();
+  private String getInvoiceMonth(InvoiceForMultifile invoiceForMultifile) {
+    return invoiceForMultifile.getIssueDate().getMonth().toString().toLowerCase();
   }
 
-  private String getInvoiceDay(Invoice invoice) {
-    return String.valueOf(invoice.getIssueDate().getDayOfMonth());
+  private String getInvoiceDay(InvoiceForMultifile invoiceForMultifile) {
+    return String.valueOf(invoiceForMultifile.getIssueDate().getDayOfMonth());
   }
 
   public Path createFolder(String path) throws IOException {
@@ -42,16 +42,16 @@ public class PathHelper {
     return file.createNewFile();
   }
 
-  public String getPathToDirectory(Invoice invoice) {
+  public String getPathToDirectory(InvoiceForMultifile invoiceForMultifile) {
     return new StringBuilder(rootPath)
-        .append(getInvoiceYear(invoice) + "/")
-        .append(getInvoiceMonth(invoice) + "/")
+        .append(getInvoiceYear(invoiceForMultifile) + "/")
+        .append(getInvoiceMonth(invoiceForMultifile) + "/")
         .toString();
   }
 
-  public String getPathToFile(Invoice invoice) {
-    return new StringBuilder(getPathToDirectory(invoice))
-        .append(getInvoiceDay(invoice) + EXTENSION_SUFFIX)
+  public String getPathToFile(InvoiceForMultifile invoiceForMultifile) {
+    return new StringBuilder(getPathToDirectory(invoiceForMultifile))
+        .append(getInvoiceDay(invoiceForMultifile) + EXTENSION_SUFFIX)
         .toString();
   }
 

@@ -1,6 +1,6 @@
 package pl.coderstrust.accounting.database;
 
-import pl.coderstrust.accounting.database.impl.multifile.Invoice;
+import pl.coderstrust.accounting.database.impl.multifile.InvoiceForMultifile;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 
 import java.io.IOException;
@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface DatabaseForMultiFile {
 
-  int saveInvoice(Invoice invoice) throws IOException;
+  int saveInvoice(InvoiceForMultifile invoiceForMultifile) throws IOException;
 
-  Optional<Invoice> getInvoiceById(int id) throws IOException;
+  Optional<InvoiceForMultifile> getInvoiceById(int id) throws IOException;
 
-  int updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException;
+  int updateInvoice(InvoiceForMultifile invoiceForMultifile) throws InvoiceNotFoundException, IOException;
 
-  List<Invoice> getInvoices() throws IOException;
+  List<InvoiceForMultifile> getInvoices() throws IOException;
 
   void deleteInvoice(int id) throws InvoiceNotFoundException, IOException;
 }

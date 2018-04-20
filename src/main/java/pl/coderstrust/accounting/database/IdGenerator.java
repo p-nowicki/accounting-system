@@ -1,7 +1,7 @@
 package pl.coderstrust.accounting.database;
 
 import pl.coderstrust.accounting.database.impl.multifile.FileHelper;
-import pl.coderstrust.accounting.database.impl.multifile.Invoice;
+import pl.coderstrust.accounting.database.impl.multifile.InvoiceForMultifile;
 import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
 
 import java.io.File;
@@ -41,12 +41,12 @@ public class IdGenerator {
   }
 
   private OptionalInt getCurrentIdFromMultiFile(String path) throws IOException {
-    List<Invoice> invoiceList = new ArrayList<>();
+    List<InvoiceForMultifile> invoiceForMultifileList = new ArrayList<>();
     List<File> files = new PathHelper(path).listFiles(path);
     for (File file : files) {
-      invoiceList.addAll(new FileHelper().readInvoicesFromFile(file));
+      invoiceForMultifileList.addAll(new FileHelper().readInvoicesFromFile(file));
     }
-    return invoiceList.stream()
+    return invoiceForMultifileList.stream()
         .mapToInt(inv -> inv.getId())
         .max();
   }

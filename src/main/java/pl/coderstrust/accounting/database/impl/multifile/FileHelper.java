@@ -10,7 +10,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class FileHelper {
 
@@ -20,21 +19,21 @@ public class FileHelper {
     this.mapper = new ObjectMapperHelper();
   }
 
-  public int saveInvoiceToFile(Invoice invoice, File file) throws IOException {
-    String invoiceAsString = mapper.convertInvoiceToJson(invoice);
+  public int saveInvoiceToFile(InvoiceForMultifile invoiceForMultifile, File file) throws IOException {
+    String invoiceAsString = mapper.convertInvoiceToJson(invoiceForMultifile);
     Files.write(file.toPath(), (invoiceAsString + System.lineSeparator()).getBytes(Charset.forName("UTF-8")),
         StandardOpenOption.APPEND);
-    return invoice.getId();
+    return invoiceForMultifile.getId();
   }
 
-  public List<Invoice> readInvoicesFromFile(File file) throws IOException {
-    List<Invoice> invoiceList = new ArrayList<>();
+  public List<InvoiceForMultifile> readInvoicesFromFile(File file) throws IOException {
+    List<InvoiceForMultifile> invoiceForMultifileList = new ArrayList<>();
     try (Scanner sc = new Scanner(file)) {
       while (sc.hasNext()) {
-        Invoice invoice = mapper.convertJsonToInvoice(sc.nextLine());
-        invoiceList.add(invoice);
+        InvoiceForMultifile invoiceForMultifile = mapper.convertJsonToInvoice(sc.nextLine());
+        invoiceForMultifileList.add(invoiceForMultifile);
       }
-      return invoiceList;
+      return invoiceForMultifileList;
     }
   }
 }
