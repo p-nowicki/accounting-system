@@ -2,6 +2,7 @@ package pl.coderstrust.accounting.database.impl.multifile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,16 +21,16 @@ public class PathHelper {
     this.rootPath = rootPath;
   }
 
-  private String getInvoiceYear(InvoiceForMultifile invoiceForMultifile) {
-    return String.valueOf(invoiceForMultifile.getIssueDate().getYear());
+  private String getInvoiceYear(Invoice invoice) {
+    return String.valueOf(invoice.getIssueDate().getYear());
   }
 
-  private String getInvoiceMonth(InvoiceForMultifile invoiceForMultifile) {
-    return invoiceForMultifile.getIssueDate().getMonth().toString().toLowerCase();
+  private String getInvoiceMonth(Invoice invoice) {
+    return invoice.getIssueDate().getMonth().toString().toLowerCase();
   }
 
-  private String getInvoiceDay(InvoiceForMultifile invoiceForMultifile) {
-    return String.valueOf(invoiceForMultifile.getIssueDate().getDayOfMonth());
+  private String getInvoiceDay(Invoice invoice) {
+    return String.valueOf(invoice.getIssueDate().getDayOfMonth());
   }
 
   public Path createFolder(String path) throws IOException {
@@ -42,16 +43,16 @@ public class PathHelper {
     return file.createNewFile();
   }
 
-  public String getPathToDirectory(InvoiceForMultifile invoiceForMultifile) {
+  public String getPathToDirectory(Invoice invoice) {
     return new StringBuilder(rootPath)
-        .append(getInvoiceYear(invoiceForMultifile) + "/")
-        .append(getInvoiceMonth(invoiceForMultifile) + "/")
+        .append(getInvoiceYear(invoice) + "/")
+        .append(getInvoiceMonth(invoice) + "/")
         .toString();
   }
 
-  public String getPathToFile(InvoiceForMultifile invoiceForMultifile) {
-    return new StringBuilder(getPathToDirectory(invoiceForMultifile))
-        .append(getInvoiceDay(invoiceForMultifile) + EXTENSION_SUFFIX)
+  public String getPathToFile(Invoice invoice) {
+    return new StringBuilder(getPathToDirectory(invoice))
+        .append(getInvoiceDay(invoice) + EXTENSION_SUFFIX)
         .toString();
   }
 

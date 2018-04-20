@@ -3,7 +3,7 @@ package pl.coderstrust.accounting.database;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import pl.coderstrust.accounting.database.impl.multifile.InvoiceForMultifile;
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
 
@@ -16,11 +16,11 @@ public final class ObjectMapperHelper {
         .registerModule(new JavaTimeModule());
   }
 
-  public String convertInvoiceToJson(InvoiceForMultifile invoiceForMultifile) throws JsonProcessingException {
-    return mapper.writeValueAsString(invoiceForMultifile);
+  public String convertInvoiceToJson(Invoice invoice) throws JsonProcessingException {
+    return mapper.writeValueAsString(invoice);
   }
 
-  public InvoiceForMultifile convertJsonToInvoice(String invoiceAsString) throws IOException {
-    return mapper.readValue(invoiceAsString, InvoiceForMultifile.class);
+  public Invoice convertJsonToInvoice(String invoiceAsString) throws IOException {
+    return mapper.readValue(invoiceAsString, Invoice.class);
   }
 }
