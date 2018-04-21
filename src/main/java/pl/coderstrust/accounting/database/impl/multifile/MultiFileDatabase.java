@@ -22,7 +22,8 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   private Map<Integer, String> fileCache;
   private String path;
 
-  public MultiFileDatabase(String path, FileHelper fileHelper, PathHelper pathHelper, IdGenerator idGenerator) throws IOException {
+  public MultiFileDatabase(String path, FileHelper fileHelper, PathHelper pathHelper, IdGenerator idGenerator)
+      throws IOException {
     this.fileHelper = fileHelper;
     this.pathHelper = pathHelper;
     this.fileCache = initializeFileCache();
@@ -59,12 +60,12 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
 
   @Override
   public List<Invoice> getInvoices() throws IOException {
-    List<Invoice> invoiceForMultifileList = new ArrayList<>();
+    List<Invoice> invoiceList = new ArrayList<>();
     List<File> files = pathHelper.listFiles(path);
     for (File file : files) {
-      invoiceForMultifileList.addAll(fileHelper.readInvoicesFromFile(file));
+      invoiceList.addAll(fileHelper.readInvoicesFromFile(file));
     }
-    return invoiceForMultifileList;
+    return invoiceList;
   }
 
   @Override
@@ -85,12 +86,12 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
     isInvoiceInDatabase(id);
 
     File file = new File(fileCache.get(id));
-    List<Invoice> invoiceForMultifileList = fileHelper.readInvoicesFromFile(file);
+    List<Invoice> invoiceList = fileHelper.readInvoicesFromFile(file);
 
     fileCache.remove(id);
     file.delete();
 
-    invoiceForMultifileList
+    invoiceList
         .stream()
         .filter(invoice -> invoice.getId() != id)
         .forEach(invoice -> {
