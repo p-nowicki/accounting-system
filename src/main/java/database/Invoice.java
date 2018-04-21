@@ -9,7 +9,7 @@ public class Invoice {
   Invoice() {
   }
 
-  private Invoice(String name, int age) {
+  Invoice(String name, int age) {
     this.name = name;
     this.age = age;
   }

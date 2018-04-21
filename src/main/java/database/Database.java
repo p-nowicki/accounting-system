@@ -10,7 +10,7 @@ public interface Database {
 
   Collection<Invoice> getInvoices() throws FileNotFoundException;
 
-  void updateInvoice(Invoice invoice) throws IOException;
+  void updateInvoice(int id, Invoice invoice) throws IOException;
 
   void removeInvoiceById(int id) throws IOException;
 

@@ -16,26 +16,21 @@ import java.util.stream.Collectors;
 
 public class InFileDatabase implements Database {
 
-  private String fileName = "src/main/resources/file/newFile";
+  private ObjectMapper mapper = new ObjectMapper();
+  private String fileName;
   private FileHelper fileHelper = new FileHelper();
   private int id = 1;
 
-  public InFileDatabase(String fileName) {
+  InFileDatabase(String fileName) {
     this.fileName = fileName;
   }
 
-  InFileDatabase() {
-  }
-
   public void saveInvoice(Invoice invoice) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    invoice.setId(generateId(id));
+    invoice.setId(id++);
     fileHelper.writeFile(fileName, mapper.writeValueAsString(invoice));
-
   }
 
   public Collection<Invoice> getInvoices() throws FileNotFoundException {
-    ObjectMapper mapper = new ObjectMapper();
     return fileHelper.readLinesFromFile(fileName).stream().map(convertStringToInvoice(mapper))
         .collect(Collectors.toList());
   }
@@ -50,27 +45,32 @@ public class InFileDatabase implements Database {
     };
   }
 
-  public void updateInvoice(Invoice invoice) {
-
-  }
-
-  public void removeInvoiceById(int id) throws IOException {
+  public void updateInvoice(int id, Invoice invoice) throws IOException {
+    int newId = id - 1;
     List<String> list = new ArrayList<>(
         Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
-    for (int i = 0; i < list.size(); i++) {
-      if (id == i) {
-        list.remove(id);
+    for (int i = 0; i < list.size(); ++i) {
+      if (i == newId) {
+        invoice.setId(id);
+        list.set(i, mapper.writeValueAsString(invoice));
+        break;
       }
     }
     Files.write(Paths.get(fileName), list, StandardCharsets.UTF_8);
   }
 
-  private int generateId(int id) throws IOException {
+  public void removeInvoiceById(int id) throws IOException {
+    int newId = id - 1;
+    if (id == 0) {
+      throw new IllegalArgumentException(" Incorrect 'id' number : " + id);
+    }
     List<String> list = new ArrayList<>(
         Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
-    for (int i = 0; i < list.size(); i++) {
-      id++;
+    for (int i = 0; i <= list.size(); i++) {
+      if (i == id) {
+        list.remove(newId);
+      }
+      Files.write(Paths.get(fileName), list, StandardCharsets.UTF_8);
     }
-    return id;
   }
 }
