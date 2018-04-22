@@ -9,19 +9,20 @@ import java.util.Map;
 
 public class InMemoryDatabase implements Database {
 
-  private final Map<Integer, Invoice> invoces = new HashMap<>();
+  private final Map<Integer, Invoice> invoices = new HashMap<>();
+  private int id = 0;
 
   public void saveInvoice(Invoice invoice) {
-    invoices.put(invoice.getId(), invoice);
+    invoice.setId(id);
+    invoices.put(id++, invoice);
   }
 
   public Collection<Invoice> getInvoices() {
-
-    return null;
+    return invoices.values();
   }
 
   public void updateInvoice(Invoice invoice) {
-    invoices.put(invoice.getId);
+    invoices.put(invoice.getId(), invoice);
   }
 
   public void removeInvoiceById(int id) {

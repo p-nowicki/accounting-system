@@ -3,7 +3,6 @@ package pl.coderstrust.accounting.database;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface Database {
 

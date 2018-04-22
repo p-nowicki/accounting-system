@@ -3,7 +3,6 @@ package pl.coderstrust.accounting.logic;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 public class InvoiceBook {
@@ -19,15 +18,15 @@ public class InvoiceBook {
   }
 
   public Collection<Invoice> getInvoices() {
-    return Arrays.asList();
+    return database.getInvoices();
   }
 
   public void updateInvoice(Invoice invoice) {
-
+    database.updateInvoice(invoice);
   }
 
   public void removeInvoiceById(int id) {
-
+    database.removeInvoiceById(id);
   }
 
 }
