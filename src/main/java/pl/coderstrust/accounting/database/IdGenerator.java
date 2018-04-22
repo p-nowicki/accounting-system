@@ -22,8 +22,7 @@ public class IdGenerator {
   }
 
   public int generateNextId() {
-    currentId.incrementAndGet();
-    return currentId.get();
+    return currentId.incrementAndGet();
   }
 
   private OptionalInt getCurrentId(String path) throws IOException {
