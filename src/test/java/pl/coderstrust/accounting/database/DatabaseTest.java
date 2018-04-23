@@ -31,7 +31,7 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoices().iterator().next();
+    Invoice result = db.getInvoiceById(0);
     assertEquals(invoiceProviderOne, result);
   }
 
