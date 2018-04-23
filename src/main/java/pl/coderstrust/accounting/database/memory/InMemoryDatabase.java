@@ -12,9 +12,11 @@ public class InMemoryDatabase implements Database {
   private final Map<Integer, Invoice> invoices = new HashMap<>();
   private int id = 0;
 
-  public void saveInvoice(Invoice invoice) {
+  public int saveInvoice(Invoice invoice) {
     invoice.setId(id);
-    invoices.put(id++, invoice);
+    invoices.put(id, invoice);
+
+    return id++;
   }
 
   public Collection<Invoice> getInvoices() {
