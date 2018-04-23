@@ -16,8 +16,8 @@ public class FileHelper {
 
   private ObjectMapperHelper mapper;
 
-  public FileHelper() {
-    this.mapper = new ObjectMapperHelper();
+  public FileHelper(ObjectMapperHelper objectMapperHelper) {
+    this.mapper = objectMapperHelper;
   }
 
   public int saveInvoiceToFile(Invoice invoice, File file) throws IOException {
