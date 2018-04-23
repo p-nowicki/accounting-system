@@ -1,6 +1,6 @@
 package pl.coderstrust.accounting.database.impl.multifile;
 
-import pl.coderstrust.accounting.database.DatabaseForMultiFile;
+import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.IdGenerator;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MultiFileDatabase implements DatabaseForMultiFile {
+public class MultiFileDatabase implements Database {
 
   private FileHelper fileHelper;
   private PathHelper pathHelper;
@@ -26,9 +25,9 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
       throws IOException {
     this.fileHelper = fileHelper;
     this.pathHelper = pathHelper;
+    this.path = path;
     this.fileCache = initializeFileCache();
     this.idGenerator = idGenerator;
-    this.path = path;
   }
 
   @Override
@@ -52,10 +51,10 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   }
 
   @Override
-  public int updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException {
+  public void updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException {
     isInvoiceInDatabase(invoice.getId());
-    deleteInvoice(invoice.getId());
-    return saveInvoice(invoice);
+    removeInvoiceById(invoice.getId());
+    saveInvoice(invoice);
   }
 
   @Override
@@ -69,20 +68,20 @@ public class MultiFileDatabase implements DatabaseForMultiFile {
   }
 
   @Override
-  public Optional<Invoice> getInvoiceById(int id) throws IOException {
+  public Invoice  getInvoiceById(int id) throws IOException {
     if (Objects.isNull(fileCache.get(id))) {
-      return Optional.empty();
+      return null;
     }
 
     File file = new File(fileCache.get(id));
     return fileHelper.readInvoicesFromFile(file)
         .stream()
         .filter(inv -> inv.getId() == id)
-        .findFirst();
+        .findFirst().get();
   }
 
   @Override
-  public void deleteInvoice(int id) throws InvoiceNotFoundException, IOException {
+  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
     isInvoiceInDatabase(id);
 
     File file = new File(fileCache.get(id));

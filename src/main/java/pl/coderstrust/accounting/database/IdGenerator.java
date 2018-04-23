@@ -16,13 +16,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class IdGenerator {
 
   private static AtomicInteger currentId;
+  private FileHelper fileHelper;
+  private PathHelper pathHelper;
 
-  public IdGenerator(String path) throws IOException {
+  public IdGenerator(String path, FileHelper fileHelper, PathHelper pathGenerator) throws IOException {
+    this.fileHelper = fileHelper;
+    this.pathHelper = pathGenerator;
     currentId = new AtomicInteger(getCurrentId(path).orElseGet(() -> 0));
   }
 
   public int generateNextId() {
-    return currentId.incrementAndGet();
+    return currentId.getAndIncrement();
   }
 
   private OptionalInt getCurrentId(String path) throws IOException {
@@ -32,7 +36,7 @@ public class IdGenerator {
   }
 
   private OptionalInt getCurrentIdFromOneFile(String path) throws IOException {
-    return new FileHelper()
+    return fileHelper
         .readInvoicesFromFile(new File(path))
         .stream()
         .mapToInt(inv -> inv.getId())
@@ -41,9 +45,9 @@ public class IdGenerator {
 
   private OptionalInt getCurrentIdFromMultiFile(String path) throws IOException {
     List<Invoice> invoiceList = new ArrayList<>();
-    List<File> files = new PathHelper(path).listFiles(path);
+    List<File> files = pathHelper.listFiles(path);
     for (File file : files) {
-      invoiceList.addAll(new FileHelper().readInvoicesFromFile(file));
+      invoiceList.addAll(fileHelper.readInvoicesFromFile(file));
     }
     return invoiceList.stream()
         .mapToInt(inv -> inv.getId())

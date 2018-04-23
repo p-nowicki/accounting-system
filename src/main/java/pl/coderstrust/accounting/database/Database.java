@@ -1,17 +1,20 @@
 package pl.coderstrust.accounting.database;
 
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
+import java.io.IOException;
 import java.util.Collection;
 
 public interface Database {
 
-  void saveInvoice(Invoice invoice);
+  int saveInvoice(Invoice invoice) throws IOException;
 
-  Collection<Invoice> getInvoices();
+  Collection<Invoice> getInvoices() throws IOException;
 
-  void updateInvoice(Invoice invoice);
+  void updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException;
 
-  void removeInvoiceById(int id);
+  Invoice getInvoiceById(int id) throws IOException;
 
+  void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException;
 }

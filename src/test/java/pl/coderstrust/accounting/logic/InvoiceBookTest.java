@@ -10,8 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +31,7 @@ public class InvoiceBookTest {
   private InvoiceBook invoiceBook;
 
   @Test
-  public void shouldSaveInvoice() {
+  public void shouldSaveInvoice() throws IOException {
     //when
     invoiceBook.saveInvoice(invoice);
 
@@ -38,7 +40,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldUpdateInvoice() {
+  public void shouldUpdateInvoice() throws InvoiceNotFoundException, IOException {
     //when
     invoiceBook.updateInvoice(invoice);
 
@@ -47,7 +49,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldGetAllInvoices() {
+  public void shouldGetAllInvoices() throws IOException {
     // given
     List<Invoice> invoices = Arrays.asList(new Invoice(), new Invoice());
     when(database.getInvoices()).thenReturn(invoices);
@@ -61,7 +63,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldRemoveInvoiceById() {
+  public void shouldRemoveInvoiceById() throws InvoiceNotFoundException, IOException {
     //given
     int testId = 1;
 
