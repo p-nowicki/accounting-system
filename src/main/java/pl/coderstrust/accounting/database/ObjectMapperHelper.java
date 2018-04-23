@@ -11,9 +11,9 @@ public final class ObjectMapperHelper {
 
   private ObjectMapper mapper;
 
-  public ObjectMapperHelper() {
-    this.mapper = new ObjectMapper()
-        .registerModule(new JavaTimeModule());
+  public ObjectMapperHelper(ObjectMapper objectMapper) {
+    this.mapper = objectMapper;
+    this.mapper.registerModule(new JavaTimeModule());
   }
 
   public String convertInvoiceToJson(Invoice invoice) throws JsonProcessingException {
