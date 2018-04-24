@@ -52,7 +52,7 @@ public class MultiFileDatabase implements Database {
 
   @Override
   public void updateInvoice(Invoice invoice) throws InvoiceNotFoundException, IOException {
-    isInvoiceInDatabase(invoice.getId());
+    throwExceptionIfInvoiceNotInDatabase(invoice.getId());
     removeInvoiceById(invoice.getId());
     saveInvoice(invoice);
   }
@@ -82,7 +82,7 @@ public class MultiFileDatabase implements Database {
 
   @Override
   public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
-    isInvoiceInDatabase(id);
+    throwExceptionIfInvoiceNotInDatabase(id);
 
     File file = new File(fileCache.get(id));
     List<Invoice> invoiceList = fileHelper.readInvoicesFromFile(file);
@@ -102,7 +102,7 @@ public class MultiFileDatabase implements Database {
         });
   }
 
-  private void isInvoiceInDatabase(int id) throws InvoiceNotFoundException {
+  private void throwExceptionIfInvoiceNotInDatabase(int id) throws InvoiceNotFoundException {
     if (!fileCache.containsKey(id)) {
       throw new InvoiceNotFoundException("InvoiceForMultifile not in database.");
     }

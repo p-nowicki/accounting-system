@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IdGenerator {
 
-  private static AtomicInteger currentId;
+  private AtomicInteger currentId;
   private FileHelper fileHelper;
   private PathHelper pathHelper;
 
