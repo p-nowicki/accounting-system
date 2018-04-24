@@ -20,8 +20,8 @@ public class InvoiceController {
   private InvoiceService invoiceService;
 
   @Autowired
-  public InvoiceController(InvoiceService invoiceBook) {
-    this.invoiceService = invoiceBook;
+  public InvoiceController(InvoiceService invoiceService) {
+    this.invoiceService = invoiceService;
   }
 
   @GetMapping
