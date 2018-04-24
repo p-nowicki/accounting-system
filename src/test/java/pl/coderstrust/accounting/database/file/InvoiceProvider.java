@@ -5,7 +5,7 @@ import pl.coderstrust.accounting.model.Invoice;
 
 public class InvoiceProvider {
 
-  public Invoice InvoiceOne () {
+  public Invoice InvoiceOne() {
 
     Company buyer = new Company();
     buyer.setName("YoloCompany");
@@ -28,7 +28,8 @@ public class InvoiceProvider {
     invoice.setSeller(seller);
     return invoice;
   }
-  public Invoice InvoiceTwo () {
+
+  public Invoice InvoiceTwo() {
 
     Company buyer = new Company();
     buyer.setName("ABCCompany");
@@ -51,7 +52,8 @@ public class InvoiceProvider {
     invoice.setSeller(seller);
     return invoice;
   }
-  public Invoice InvoiceThree () {
+
+  public Invoice InvoiceThree() {
 
     Company buyer = new Company();
     buyer.setName("ABCCompany");

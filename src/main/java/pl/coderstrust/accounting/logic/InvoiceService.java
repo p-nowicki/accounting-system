@@ -1,15 +1,17 @@
 package pl.coderstrust.accounting.logic;
 
+import org.springframework.stereotype.Service;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.util.Collection;
 
-public class InvoiceBook {
+@Service
+public class InvoiceService {
 
   private Database database;
 
-  public InvoiceBook(Database database) {
+  public InvoiceService(Database database) {
     this.database = database;
   }
 

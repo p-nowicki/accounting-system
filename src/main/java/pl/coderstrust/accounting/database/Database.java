@@ -10,7 +10,7 @@ public interface Database {
 
   Collection<Invoice> getInvoices();
 
-  void updateInvoice(Invoice invoice);
+  int updateInvoice(Invoice invoice);
 
   void removeInvoiceById(int id);
 

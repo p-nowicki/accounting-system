@@ -26,12 +26,12 @@ public class InvoiceBookTest {
   private Invoice invoice;
 
   @InjectMocks
-  private InvoiceBook invoiceBook;
+  private InvoiceService invoiceService;
 
   @Test
   public void shouldSaveInvoice() {
     //when
-    invoiceBook.saveInvoice(invoice);
+    invoiceService.saveInvoice(invoice);
 
     //then
     verify(database).saveInvoice(invoice);
@@ -40,7 +40,7 @@ public class InvoiceBookTest {
   @Test
   public void shouldUpdateInvoice() {
     //when
-    invoiceBook.updateInvoice(invoice);
+    invoiceService.updateInvoice(invoice);
 
     //then
     verify(database).updateInvoice(invoice);
@@ -53,7 +53,7 @@ public class InvoiceBookTest {
     when(database.getInvoices()).thenReturn(invoices);
 
     //when
-    Collection<Invoice> result = invoiceBook.getInvoices();
+    Collection<Invoice> result = invoiceService.getInvoices();
 
     //then
     verify(database).getInvoices();
@@ -66,7 +66,7 @@ public class InvoiceBookTest {
     int testId = 1;
 
     //when
-    invoiceBook.removeInvoiceById(testId);
+    invoiceService.removeInvoiceById(testId);
 
     //then
     verify(database).removeInvoiceById(testId);
