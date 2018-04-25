@@ -40,6 +40,7 @@ public abstract class DatabaseTest {
     System.out.println(result.hashCode());
 
     assertEquals(invoiceProviderOne, result);
+
   }
 
   @Test
@@ -77,13 +78,14 @@ public abstract class DatabaseTest {
     db.saveInvoice(invoiceProviderTwo);
     db.saveInvoice(invoiceProviderThree);
     db.removeInvoiceById(0);
+    db.getInvoices();
 
     //then
     assertEquals(2, db.getInvoices().size());
   }
 
   @Test
-  public void abc() throws IOException, InvoiceNotFoundException {
+  public void shouldSave2InvoicesAndUpdateOneInvoiceNumber() throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
