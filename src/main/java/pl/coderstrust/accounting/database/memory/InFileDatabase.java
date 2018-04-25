@@ -1,6 +1,9 @@
-package database;
+package pl.coderstrust.accounting.database.memory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pl.coderstrust.accounting.logic.Database;
+import pl.coderstrust.accounting.logic.FileHelper;
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.FileNotFoundException;
 
@@ -10,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -19,15 +23,19 @@ public class InFileDatabase implements Database {
   private ObjectMapper mapper = new ObjectMapper();
   private String fileName;
   private FileHelper fileHelper = new FileHelper();
-  private int id = 1;
+  private int id;
 
-  InFileDatabase(String fileName) {
+  InFileDatabase(String fileName) throws IOException {
     this.fileName = fileName;
+    id = getInvoices().stream().max(Comparator.comparing(v -> v.getId())).orElse(new Invoice())
+        .getId() + 1;
   }
 
-  public void saveInvoice(Invoice invoice) throws IOException {
+  @Override
+  public int saveInvoice(Invoice invoice) throws IOException {
     invoice.setId(id++);
     fileHelper.writeFile(fileName, mapper.writeValueAsString(invoice));
+    return id;
   }
 
   public Collection<Invoice> getInvoices() throws FileNotFoundException {
@@ -46,11 +54,10 @@ public class InFileDatabase implements Database {
   }
 
   public void updateInvoice(int id, Invoice invoice) throws IOException {
-    int newId = id - 1;
     List<String> list = new ArrayList<>(
         Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
     for (int i = 0; i < list.size(); ++i) {
-      if (i == newId) {
+      if (list.get(i).contains("" + id)) {
         invoice.setId(id);
         list.set(i, mapper.writeValueAsString(invoice));
         break;
@@ -60,15 +67,11 @@ public class InFileDatabase implements Database {
   }
 
   public void removeInvoiceById(int id) throws IOException {
-    int newId = id - 1;
-    if (id == 0) {
-      throw new IllegalArgumentException(" Incorrect 'id' number : " + id);
-    }
     List<String> list = new ArrayList<>(
         Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
-    for (int i = 0; i <= list.size(); i++) {
-      if (i == id) {
-        list.remove(newId);
+    for (int i = 0; i < list.size(); i++) {
+      if (list.get(i).contains("" + id)) {
+        list.remove(id);
       }
       Files.write(Paths.get(fileName), list, StandardCharsets.UTF_8);
     }

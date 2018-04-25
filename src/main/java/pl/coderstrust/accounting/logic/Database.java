@@ -1,12 +1,15 @@
-package database;
+package pl.coderstrust.accounting.logic;
+
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.Collection;
 
 public interface Database {
 
-  void saveInvoice(Invoice invoice) throws IOException;
+  int saveInvoice(Invoice invoice) throws IOException;
 
   Collection<Invoice> getInvoices() throws FileNotFoundException;
 

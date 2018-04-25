@@ -10,6 +10,8 @@ public class Invoice {
 
   private int id;
   private String number;
+  private String name;
+  private int age;
 
   private LocalDate issueDate;
 
@@ -17,6 +19,22 @@ public class Invoice {
   private Company seller;
 
   private List<InvoiceEntry> entries = new ArrayList<>();
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
 
   public void setId(int id) {
     this.id = id;

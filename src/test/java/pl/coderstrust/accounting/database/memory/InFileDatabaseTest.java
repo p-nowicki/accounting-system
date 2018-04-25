@@ -1,10 +1,12 @@
-package database;
+package pl.coderstrust.accounting.database.memory;
 
 import static junit.framework.TestCase.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import pl.coderstrust.accounting.logic.FileHelper;
+import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
 
@@ -14,12 +16,16 @@ import java.util.List;
 
 public class InFileDatabaseTest {
 
-  private String fileName = "src/test/resources/files/newFile";
+  private String fileName = "src/test/resources/files/newFile2";
   private FileHelper fileHelper = new FileHelper();
   private InFileDatabase inFileDatabase = new InFileDatabase(fileName);
+  private Invoice invoice = new Invoice();
+
+  public InFileDatabaseTest() throws IOException {
+  }
 
   @Before
-  public void clearEveryFileBeforeTest() {
+  public void shouldRemoveLinesFromFileBeforeTest() {
     new File(fileName).delete();
   }
 
@@ -27,8 +33,8 @@ public class InFileDatabaseTest {
   public void shouldSaveInvoice() throws IOException {
     //given
     Invoice invoice23 = new Invoice();
-    invoice23.setName("Lukas");
-    invoice23.setAge(2);
+    invoice.setName("Lukas");
+    invoice.setAge(2);
     String expected = "{\"name\":\"Lukas\",\"age\":2,\"id\":1}";
     //when
     inFileDatabase.saveInvoice(invoice23);
@@ -38,25 +44,8 @@ public class InFileDatabaseTest {
   }
 
   @Test
-  public void shouldGiveInvoice() throws IOException {
-    //given
-    Invoice invoice23 = new Invoice();
-    invoice23.setName("Lukas");
-    invoice23.setAge(2);
-    List<String> expected = Collections.singletonList("{\"name\":\"Lukas\",\"age\":2,\"id\":1}");
-    //when
-    inFileDatabase.saveInvoice(invoice23);
-    List<String> list = fileHelper.readLinesFromFile(fileName);
-    //then
-    assertEquals(expected, list);
-  }
-
-  @Test
   public void shouldRemoveInvoiceInGivenId() throws IOException {
-    Invoice invoice = new Invoice();
-    final FileHelper fileHelper = new FileHelper();
     //given
-    new File(fileName).delete();
     inFileDatabase.saveInvoice(invoice);
     inFileDatabase.saveInvoice(invoice);
     inFileDatabase.saveInvoice(invoice);
@@ -72,14 +61,13 @@ public class InFileDatabaseTest {
   @Test
   public void shouldUpdateExistingInvoice() throws IOException {
     //given
-    Invoice invoice = new Invoice();
-    Invoice testInvoice = new Invoice("Piotr", 25);
-    final FileHelper fileHelper = new FileHelper();
-    new File(fileName).delete();
+    Invoice testInvoice = new Invoice();
+    testInvoice.setName("Piotr");
+    testInvoice.setAge(25);
     inFileDatabase.saveInvoice(invoice);
-    List<String> expected = Collections.singletonList("{\"name\":\"Piotr\",\"age\":25,\"id\":1}");
+    List<String> expected = Collections.singletonList("{\"name\":\"Piotr\",\"age\":25,\"id\":0}");
     //when
-    inFileDatabase.updateInvoice(1, testInvoice);
+    inFileDatabase.updateInvoice(0, testInvoice);
     List<String> list = fileHelper.readLinesFromFile(fileName);
     //then
     assertEquals(expected, list);

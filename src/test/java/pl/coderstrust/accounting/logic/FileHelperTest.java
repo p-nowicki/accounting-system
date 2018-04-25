@@ -1,7 +1,8 @@
-package database;
+package pl.coderstrust.accounting.logic;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
 
 import org.junit.Test;
 
@@ -14,15 +15,15 @@ import java.util.List;
 
 public class FileHelperTest {
 
+  private FileHelper fileHelper = new FileHelper();
   private String fileName = "src/test/resources/files/newFile";
 
   @Test
   public void shouldReadExistingFile() throws FileNotFoundException {
 
-    List<String> expected = Arrays.asList("this is a test","this is a test");
-    FileHelper fileHelper = new FileHelper();
+    List<String> expected = Arrays.asList("this is a test", "this is a test");
     //when
-    List<String> result = fileHelper.readLinesFromFile("src/test/resources/files/testText");
+    List<String> result = fileHelper.readLinesFromFile("src/test/resources/files/testText2");
     //then
     assertThat(result, is(expected));
   }
@@ -32,7 +33,6 @@ public class FileHelperTest {
     //given
     new File(fileName).delete();
     String matcher = "[some text to check ]";
-    FileHelper fileHelper = new FileHelper();
     //when
     fileHelper.writeFile(fileName, "some text to check ");
     String result = String.valueOf(fileHelper.readLinesFromFile(fileName));

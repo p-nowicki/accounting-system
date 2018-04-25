@@ -1,7 +1,8 @@
-package database;
+package pl.coderstrust.accounting.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import pl.coderstrust.accounting.model.Invoice;
 
 public class InvoiceTest {
 
@@ -12,10 +13,8 @@ public class InvoiceTest {
     //when
     invoice2.setAge(13);
     invoice2.setName("Bob");
-    invoice2.setId(0);
     //then
     Assert.assertEquals("Bob", invoice2.getName());
     Assert.assertEquals(13, invoice2.getAge());
-    Assert.assertEquals(0, invoice2.getId());
   }
 }

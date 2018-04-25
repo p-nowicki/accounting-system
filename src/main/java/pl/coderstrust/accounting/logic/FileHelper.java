@@ -1,4 +1,4 @@
-package database;
+package pl.coderstrust.accounting.logic;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,13 +18,11 @@ public class FileHelper {
         line.add(scanner.nextLine());
       }
     }
-
     return line;
   }
 
   public void writeFile(String fileName, String line) throws IOException {
-    try (
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
+    try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
       bufferedWriter.write(String.valueOf(line));
       bufferedWriter.newLine();
     }
