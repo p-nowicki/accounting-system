@@ -32,6 +32,14 @@ public abstract class DatabaseTest {
     assertEquals(3, db.getInvoices().size());
 
     Invoice result = db.getInvoiceById(0);
+
+
+    System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
+    System.out.println(invoiceProviderOne.toString());
+    System.out.println(invoiceProviderOne.hashCode());
+    System.out.println(result.toString());
+    System.out.println(result.hashCode());
+
     assertEquals(invoiceProviderOne, result);
   }
 

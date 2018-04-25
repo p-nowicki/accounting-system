@@ -70,4 +70,15 @@ public class Company {
   public int hashCode() {
     return Objects.hash(name, nip, street, postCode, city);
   }
+
+  @Override
+  public String toString() {
+    return "Company{" +
+        "name='" + name + '\'' +
+        ", nip=" + nip +
+        ", street='" + street + '\'' +
+        ", postCode='" + postCode + '\'' +
+        ", city='" + city + '\'' +
+        '}';
+  }
 }
