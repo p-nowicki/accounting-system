@@ -21,7 +21,7 @@ public class InvoiceProvider {
     seller.setNip(1233215678);
     seller.setStreet("Poznanska 1");
     seller.setPostCode("65-999");
-    seller.setCity("Poznań");
+    seller.setCity("Poznan");
 
     Invoice invoice = new Invoice();
     invoice.setNumber("FV123/1");
@@ -45,7 +45,7 @@ public class InvoiceProvider {
     seller.setNip(2016545678);
     seller.setStreet("Krakowska 1");
     seller.setPostCode("65-999");
-    seller.setCity("Poznań");
+    seller.setCity("Poznan");
 
     Invoice invoice = new Invoice();
     invoice.setNumber("FV123/2");
@@ -69,7 +69,7 @@ public class InvoiceProvider {
     seller.setNip(1778886789);
     seller.setStreet("Gdanska 1");
     seller.setPostCode("65-999");
-    seller.setCity("Poznań");
+    seller.setCity("Poznan");
 
     Invoice invoice = new Invoice();
     invoice.setNumber("FV123/3");
