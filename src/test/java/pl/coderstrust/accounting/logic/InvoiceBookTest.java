@@ -13,6 +13,9 @@ import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
+import java.io.FileNotFoundException;
+
+import java.io.IOException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,12 +43,12 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldUpdateInvoice() throws InvoiceNotFoundException, IOException {
+  public void shouldUpdateInvoice() throws IOException {
     //when
-    invoiceBook.updateInvoice(invoice);
+    invoiceBook.updateInvoice(1, invoice);
 
     //then
-    verify(database).updateInvoice(invoice);
+    verify(database).updateInvoice(1, invoice);
   }
 
   @Test
@@ -63,7 +66,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldRemoveInvoiceById() throws InvoiceNotFoundException, IOException {
+  public void shouldRemoveInvoiceById() throws IOException {
     //given
     int testId = 1;
 

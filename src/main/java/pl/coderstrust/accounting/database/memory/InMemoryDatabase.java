@@ -36,4 +36,3 @@ public class InMemoryDatabase implements Database {
     return invoices.get(id);
   }
 }
-

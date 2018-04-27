@@ -96,7 +96,7 @@ public abstract class DatabaseTest {
     db.saveInvoice(invoiceProviderOne);
     db.saveInvoice(invoiceProviderTwo);
     invoiceProviderOne.setNumber("ABC12");
-    db.updateInvoice(invoiceProviderOne);
+    db.updateInvoice(1, invoiceProviderOne);
 
     //then
     assertEquals("ABC12", invoiceProviderOne.getNumber());
