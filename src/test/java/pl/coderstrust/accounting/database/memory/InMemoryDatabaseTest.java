@@ -9,5 +9,4 @@ public class InMemoryDatabaseTest extends DatabaseTest {
   protected Database getDatabase() {
     return new InMemoryDatabase();
   }
-
 }

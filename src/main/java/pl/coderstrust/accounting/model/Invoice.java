@@ -1,5 +1,7 @@
 package pl.coderstrust.accounting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ public class Invoice {
 
   private int id;
   private String number;
+  private String name;
+  private int age;
 
   private LocalDate issueDate;
 
@@ -17,6 +21,22 @@ public class Invoice {
   private Company seller;
 
   private List<InvoiceEntry> entries = new ArrayList<>();
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
 
   public void setId(int id) {
     this.id = id;
@@ -66,6 +86,7 @@ public class Invoice {
     return id;
   }
 
+  @JsonIgnore
   public BigDecimal getNetValue() {
     BigDecimal sum = BigDecimal.ZERO;
 
@@ -96,5 +117,17 @@ public class Invoice {
   public int hashCode() {
 
     return Objects.hash(id, number, issueDate, buyer, seller, entries);
+  }
+
+  @Override
+  public String toString() {
+    return "Invoice{"
+        + "id=" + id
+        + ", number='" + number + '\''
+        + ", issueDate=" + issueDate
+        + ", buyer=" + buyer
+        + ", seller=" + seller
+        + ", entries=" + entries
+        + '}';
   }
 }

@@ -4,19 +4,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.database.file.InvoiceProvider;
+import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
+
+import java.io.IOException;
 
 public abstract class DatabaseTest {
 
-  protected abstract Database getDatabase();
+  protected abstract Database getDatabase() throws IOException;
 
   @Test
-  public void shouldSaveInvoice() {
+  public void shouldSaveInvoice() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -28,16 +31,24 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoices().iterator().next();
+    Invoice result = db.getInvoiceById(0);
+
+    System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
+    System.out.println(invoiceProviderOne.toString());
+    System.out.println(invoiceProviderOne.hashCode());
+    System.out.println(result.toString());
+    System.out.println(result.hashCode());
+
     assertEquals(invoiceProviderOne, result);
+
   }
 
   @Test
-  public void shouldSave3InvoicesAndVerifyID() {
+  public void shouldSave3InvoicesAndVerifyId() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -55,11 +66,11 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void shouldSave3InvoicesAndRemoveOne() {
+  public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -67,23 +78,25 @@ public abstract class DatabaseTest {
     db.saveInvoice(invoiceProviderTwo);
     db.saveInvoice(invoiceProviderThree);
     db.removeInvoiceById(0);
+    db.getInvoices();
 
     //then
     assertEquals(2, db.getInvoices().size());
   }
 
   @Test
-  public void abc() {
+  public void shouldSave2InvoicesAndUpdateOneInvoiceNumber()
+      throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
     Database db = getDatabase();
 
     //when
     db.saveInvoice(invoiceProviderOne);
     db.saveInvoice(invoiceProviderTwo);
     invoiceProviderOne.setNumber("ABC12");
-    db.updateInvoice(invoiceProviderOne);
+    db.updateInvoice(1, invoiceProviderOne);
 
     //then
     assertEquals("ABC12", invoiceProviderOne.getNumber());

@@ -10,8 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
+import java.io.FileNotFoundException;
+
+import java.io.IOException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +34,7 @@ public class InvoiceServiceTest {
   private InvoiceService invoiceService;
 
   @Test
-  public void shouldSaveInvoice() {
+  public void shouldSaveInvoice() throws IOException {
     //when
     invoiceService.saveInvoice(invoice);
 
@@ -38,16 +43,16 @@ public class InvoiceServiceTest {
   }
 
   @Test
-  public void shouldUpdateInvoice() {
+  public void shouldUpdateInvoice() throws IOException, InvoiceNotFoundException {
     //when
-    invoiceService.updateInvoice(invoice);
+    invoiceService.updateInvoice(1, invoice);
 
     //then
-    verify(database).updateInvoice(invoice);
+    verify(database).updateInvoice(1, invoice);
   }
 
   @Test
-  public void shouldGetAllInvoices() {
+  public void shouldGetAllInvoices() throws IOException {
     // given
     List<Invoice> invoices = Arrays.asList(new Invoice(), new Invoice());
     when(database.getInvoices()).thenReturn(invoices);
@@ -61,7 +66,7 @@ public class InvoiceServiceTest {
   }
 
   @Test
-  public void shouldRemoveInvoiceById() {
+  public void shouldRemoveInvoiceById() throws IOException, InvoiceNotFoundException {
     //given
     int testId = 1;
 
