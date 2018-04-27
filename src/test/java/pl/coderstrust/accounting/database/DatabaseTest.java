@@ -4,15 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.database.file.InvoiceProvider;
+import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
+
+import java.io.IOException;
 
 public abstract class DatabaseTest {
 
-  protected abstract Database getDatabase();
+  protected abstract Database getDatabase() throws IOException;
 
   @Test
-  public void shouldSaveInvoice() {
+  public void shouldSaveInvoice() throws IOException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
@@ -28,12 +31,20 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoices().iterator().next();
+    Invoice result = db.getInvoiceById(0);
+
+
+    System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
+    System.out.println(invoiceProviderOne.toString());
+    System.out.println(invoiceProviderOne.hashCode());
+    System.out.println(result.toString());
+    System.out.println(result.hashCode());
+
     assertEquals(invoiceProviderOne, result);
   }
 
   @Test
-  public void shouldSave3InvoicesAndVerifyID() {
+  public void shouldSave3InvoicesAndVerifyID() throws IOException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
@@ -55,7 +66,7 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void shouldSave3InvoicesAndRemoveOne() {
+  public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
@@ -73,7 +84,7 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void abc() {
+  public void abc() throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();

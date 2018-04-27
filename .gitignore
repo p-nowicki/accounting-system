@@ -30,3 +30,6 @@ out
 *.iml
 
 target
+
+src/test/resources/
+src/main/resources/

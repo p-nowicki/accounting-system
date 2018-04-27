@@ -1,6 +1,7 @@
 package pl.coderstrust.accounting.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class InvoiceEntry {
 
@@ -22,5 +23,23 @@ public class InvoiceEntry {
 
   public void setPrice(BigDecimal price) {
     this.price = price;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    InvoiceEntry that = (InvoiceEntry) o;
+    return Objects.equals(description, that.description) &&
+        Objects.equals(price, that.price);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(description, price);
   }
 }
