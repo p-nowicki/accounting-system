@@ -51,19 +51,19 @@ public class Company {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object other) {
+    if (this == other) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (other == null || getClass() != other.getClass()) {
       return false;
     }
-    Company company = (Company) o;
-    return nip == company.nip &&
-        Objects.equals(name, company.name) &&
-        Objects.equals(street, company.street) &&
-        Objects.equals(postCode, company.postCode) &&
-        Objects.equals(city, company.city);
+    Company company = (Company) other;
+    return nip == company.nip
+        && Objects.equals(name, company.name)
+        && Objects.equals(street, company.street)
+        && Objects.equals(postCode, company.postCode)
+        && Objects.equals(city, company.city);
   }
 
   @Override
@@ -73,12 +73,12 @@ public class Company {
 
   @Override
   public String toString() {
-    return "Company{" +
-        "name='" + name + '\'' +
-        ", nip=" + nip +
-        ", street='" + street + '\'' +
-        ", postCode='" + postCode + '\'' +
-        ", city='" + city + '\'' +
-        '}';
+    return "Company{"
+        + "name='" + name + '\''
+        + ", nip=" + nip
+        + ", street='" + street + '\''
+        + ", postCode='" + postCode + '\''
+        + ", city='" + city + '\''
+        + '}';
   }
 }

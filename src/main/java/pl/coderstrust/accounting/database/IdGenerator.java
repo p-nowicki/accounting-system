@@ -19,7 +19,8 @@ public class IdGenerator {
   private FileHelper fileHelper;
   private PathHelper pathHelper;
 
-  public IdGenerator(String path, FileHelper fileHelper, PathHelper pathGenerator) throws IOException {
+  public IdGenerator(String path, FileHelper fileHelper, PathHelper pathGenerator)
+      throws IOException {
     this.fileHelper = fileHelper;
     this.pathHelper = pathGenerator;
     currentId = new AtomicInteger(getCurrentId(path).orElseGet(() -> 0));

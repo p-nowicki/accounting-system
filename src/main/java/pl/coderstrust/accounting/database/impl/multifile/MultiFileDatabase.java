@@ -21,7 +21,8 @@ public class MultiFileDatabase implements Database {
   private Map<Integer, String> fileCache;
   private String path;
 
-  public MultiFileDatabase(String path, FileHelper fileHelper, PathHelper pathHelper, IdGenerator idGenerator)
+  public MultiFileDatabase(String path, FileHelper fileHelper, PathHelper pathHelper,
+      IdGenerator idGenerator)
       throws IOException {
     this.fileHelper = fileHelper;
     this.pathHelper = pathHelper;
@@ -68,7 +69,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice  getInvoiceById(int id) throws IOException {
+  public Invoice getInvoiceById(int id) throws IOException {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
@@ -109,6 +110,7 @@ public class MultiFileDatabase implements Database {
   }
 
   private Map<Integer, String> initializeFileCache() throws IOException {
-    return getInvoices().stream().collect(Collectors.toMap(i -> i.getId(), i -> pathHelper.getPathToFile(i)));
+    return getInvoices().stream()
+        .collect(Collectors.toMap(i -> i.getId(), i -> pathHelper.getPathToFile(i)));
   }
 }

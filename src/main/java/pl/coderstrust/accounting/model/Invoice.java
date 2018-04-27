@@ -103,13 +103,13 @@ public class Invoice {
 
   @Override
   public String toString() {
-    return "Invoice{" +
-        "id=" + id +
-        ", number='" + number + '\'' +
-        ", issueDate=" + issueDate +
-        ", buyer=" + buyer +
-        ", seller=" + seller +
-        ", entries=" + entries +
-        '}';
+    return "Invoice{"
+        + "id=" + id
+        +  ", number='" + number + '\''
+        + ", issueDate=" + issueDate
+        + ", buyer=" + buyer
+        + ", seller=" + seller
+        + ", entries=" + entries
+        + '}';
   }
 }

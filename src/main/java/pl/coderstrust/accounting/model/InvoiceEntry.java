@@ -26,16 +26,16 @@ public class InvoiceEntry {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object other) {
+    if (this == other) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (other == null || getClass() != other.getClass()) {
       return false;
     }
-    InvoiceEntry that = (InvoiceEntry) o;
-    return Objects.equals(description, that.description) &&
-        Objects.equals(price, that.price);
+    InvoiceEntry that = (InvoiceEntry) other;
+    return Objects.equals(description, that.description)
+        && Objects.equals(price, that.price);
   }
 
   @Override

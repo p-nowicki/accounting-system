@@ -26,7 +26,7 @@ public class MultiFileDatabaseTest extends DatabaseTest {
 
   @Override
   public Database getDatabase() throws IOException {
-    return new MultiFileDatabase (FILES_PATH, fileHelper, pathHelper, idGenerator);
+    return new MultiFileDatabase(FILES_PATH, fileHelper, pathHelper, idGenerator);
   }
 
   @Before
