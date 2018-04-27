@@ -22,7 +22,8 @@ public class FileHelper {
 
   public int saveInvoiceToFile(Invoice invoice, File file) throws IOException {
     String invoiceAsString = mapper.convertInvoiceToJson(invoice);
-    Files.write(file.toPath(), (invoiceAsString + System.lineSeparator()).getBytes(Charset.forName("UTF-8")),
+    Files.write(file.toPath(),
+        (invoiceAsString + System.lineSeparator()).getBytes(Charset.forName("UTF-8")),
         StandardOpenOption.APPEND);
     return invoice.getId();
   }

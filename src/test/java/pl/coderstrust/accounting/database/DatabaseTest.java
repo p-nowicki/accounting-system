@@ -17,9 +17,9 @@ public abstract class DatabaseTest {
   @Test
   public void shouldSaveInvoice() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -33,7 +33,6 @@ public abstract class DatabaseTest {
 
     Invoice result = db.getInvoiceById(0);
 
-
     System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
     System.out.println(invoiceProviderOne.toString());
     System.out.println(invoiceProviderOne.hashCode());
@@ -44,11 +43,11 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void shouldSave3InvoicesAndVerifyID() throws IOException {
+  public void shouldSave3InvoicesAndVerifyId() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -68,9 +67,9 @@ public abstract class DatabaseTest {
   @Test
   public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().InvoiceThree();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -86,8 +85,8 @@ public abstract class DatabaseTest {
   @Test
   public void abc() throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().InvoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().InvoiceTwo();
+    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
     Database db = getDatabase();
 
     //when
