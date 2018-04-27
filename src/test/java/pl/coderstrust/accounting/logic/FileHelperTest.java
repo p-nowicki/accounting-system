@@ -3,27 +3,32 @@ package pl.coderstrust.accounting.logic;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-
 import org.junit.Test;
+import pl.coderstrust.accounting.helpers.FileHelper;
 
 import java.io.File;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 
 public class FileHelperTest {
 
   private FileHelper fileHelper = new FileHelper();
-  private String fileName = "src/test/resources/files/newFile";
+  private File file = new File("src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
 
   @Test
-  public void shouldReadExistingFile() throws FileNotFoundException {
+  public void shouldReadExistingFile() throws IOException {
+    // given
+    List<String> expected = Arrays.asList("this is a test 1", "this is a test 2");
+    Files.write(Paths.get(file.getAbsolutePath()), expected, StandardOpenOption.CREATE,
+        StandardOpenOption.TRUNCATE_EXISTING);
 
-    List<String> expected = Arrays.asList("this is a test", "this is a test");
     //when
-    List<String> result = fileHelper.readLinesFromFile("src/test/resources/files/testText2");
+    List<String> result = fileHelper.readLinesFromFile(file);
+
     //then
     assertThat(result, is(expected));
   }
@@ -31,12 +36,15 @@ public class FileHelperTest {
   @Test
   public void shouldWriteListToFile() throws IOException {
     //given
-    new File(fileName).delete();
-    String matcher = "[some text to check ]";
+    file.delete();
+    String expected = "some text to check";
+
     //when
-    fileHelper.writeFile(fileName, "some text to check ");
-    String result = String.valueOf(fileHelper.readLinesFromFile(fileName));
+    fileHelper.writeFile(file, expected);
+    List<String> result = fileHelper.readLinesFromFile(file);
+
     //then
-    assertThat(result, is(matcher));
+    assertThat(result.size(), is(1));
+    assertThat(result.get(0), is(expected));
   }
 }
