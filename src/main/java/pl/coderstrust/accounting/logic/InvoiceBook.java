@@ -1,7 +1,10 @@
 package pl.coderstrust.accounting.logic;
 
+import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
+import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import java.io.IOException;
@@ -19,7 +22,7 @@ public class InvoiceBook {
     database.saveInvoice(invoice);
   }
 
-  public Collection<Invoice> getInvoices() throws FileNotFoundException {
+  public Collection<Invoice> getInvoices() throws IOException {
     return database.getInvoices();
   }
 
@@ -27,7 +30,7 @@ public class InvoiceBook {
     database.updateInvoice(id, invoice);
   }
 
-  public void removeInvoiceById(int id) throws IOException {
+  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
     database.removeInvoiceById(id);
   }
 

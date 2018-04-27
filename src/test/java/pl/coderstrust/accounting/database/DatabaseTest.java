@@ -4,15 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.database.file.InvoiceProvider;
-import pl.coderstrust.accounting.logic.Database;
+import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
 
 public abstract class DatabaseTest {
 
-  protected abstract Database getDatabase();
+  protected abstract Database getDatabase() throws IOException;
 
   @Test
   public void shouldSaveInvoice() throws IOException {
@@ -31,8 +31,16 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoices().iterator().next();
+    Invoice result = db.getInvoiceById(0);
+
+    System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
+    System.out.println(invoiceProviderOne.toString());
+    System.out.println(invoiceProviderOne.hashCode());
+    System.out.println(result.toString());
+    System.out.println(result.hashCode());
+
     assertEquals(invoiceProviderOne, result);
+
   }
 
   @Test
@@ -58,7 +66,7 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void shouldSave3InvoicesAndRemoveOne() throws IOException {
+  public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
@@ -70,13 +78,15 @@ public abstract class DatabaseTest {
     db.saveInvoice(invoiceProviderTwo);
     db.saveInvoice(invoiceProviderThree);
     db.removeInvoiceById(0);
+    db.getInvoices();
 
     //then
     assertEquals(2, db.getInvoices().size());
   }
 
   @Test
-  public void abc() throws IOException {
+  public void shouldSave2InvoicesAndUpdateOneInvoiceNumber()
+      throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();

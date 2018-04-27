@@ -9,10 +9,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.FileNotFoundException;
 
+import java.io.IOException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,7 +52,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldGetAllInvoices() throws FileNotFoundException {
+  public void shouldGetAllInvoices() throws IOException {
     // given
     List<Invoice> invoices = Arrays.asList(new Invoice(), new Invoice());
     when(database.getInvoices()).thenReturn(invoices);
