@@ -23,8 +23,9 @@ public class InMemoryDatabase implements Database {
     return invoices.values();
   }
 
-  public void updateInvoice(Invoice invoice) {
-    invoices.put(invoice.getId(), invoice);
+  public void updateInvoice(int id, Invoice invoice) {
+    invoice.setId(id);
+    invoices.put(id, invoice);
   }
 
   public void removeInvoiceById(int id) {

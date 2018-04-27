@@ -5,9 +5,6 @@ import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
-import java.io.FileNotFoundException;
-
-import java.io.IOException;
 import java.util.Collection;
 
 public class InvoiceBook {
@@ -26,7 +23,7 @@ public class InvoiceBook {
     return database.getInvoices();
   }
 
-  public void updateInvoice(int id, Invoice invoice) throws IOException {
+  public void updateInvoice(int id, Invoice invoice) throws IOException, InvoiceNotFoundException {
     database.updateInvoice(id, invoice);
   }
 

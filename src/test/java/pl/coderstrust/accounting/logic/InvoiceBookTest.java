@@ -43,7 +43,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldUpdateInvoice() throws IOException {
+  public void shouldUpdateInvoice() throws IOException, InvoiceNotFoundException {
     //when
     invoiceBook.updateInvoice(1, invoice);
 
@@ -66,7 +66,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldRemoveInvoiceById() throws IOException {
+  public void shouldRemoveInvoiceById() throws IOException, InvoiceNotFoundException {
     //given
     int testId = 1;
 

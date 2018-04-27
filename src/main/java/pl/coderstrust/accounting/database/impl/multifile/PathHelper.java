@@ -56,10 +56,9 @@ public class PathHelper {
         .toString();
   }
 
-  public List<File> listFiles(String path) {
-    File source = new File(path);
+  public List<File> listFiles(File path) {
     return (List<File>) FileUtils
-        .listFiles(source, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+        .listFiles(path, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
   }
 
   public boolean pathExists(String path) {

@@ -1,79 +1,78 @@
 package pl.coderstrust.accounting.database.memory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import pl.coderstrust.accounting.logic.Database;
-import pl.coderstrust.accounting.logic.FileHelper;
+import pl.coderstrust.accounting.database.Database;
+import pl.coderstrust.accounting.database.ObjectMapperHelper;
+import pl.coderstrust.accounting.helpers.FileHelper;
+import pl.coderstrust.accounting.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
-import java.io.FileNotFoundException;
-
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class InFileDatabase implements Database {
 
-  private ObjectMapper mapper = new ObjectMapper();
-  private String fileName;
-  private FileHelper fileHelper = new FileHelper();
-  private int id;
+  private File databaseLocation;
+  private FileInvoiceHelper fileInvoiceHelper = new FileInvoiceHelper(new FileHelper(),
+      new ObjectMapperHelper());
+  private int id; // TODO reuse IdHelper from multifileDatabase
+  // TODO implement dependency injection
 
-  InFileDatabase(String fileName) throws IOException {
-    this.fileName = fileName;
-    id = getInvoices().stream().max(Comparator.comparing(v -> v.getId())).orElse(new Invoice())
+  // TODO this class can be part some specific behaviour of multifileDatabase - just writing to single file
+  InFileDatabase(File databaseLocation) {
+    this.databaseLocation = databaseLocation;
+    id = getInvoices() // TODO reuse method from multifile
+        .stream()
+        .max(Comparator.comparing(Invoice::getId))
+        .orElse(new Invoice())
         .getId() + 1;
   }
 
   @Override
-  public int saveInvoice(Invoice invoice) throws IOException {
-    invoice.setId(id++);
-    fileHelper.writeFile(fileName, mapper.writeValueAsString(invoice));
-    return id;
+  public int saveInvoice(Invoice invoice) {
+    invoice.setId(id);
+    fileInvoiceHelper.saveInvoiceToFile(invoice, databaseLocation);
+    return id++;
   }
 
-  public Collection<Invoice> getInvoices() throws FileNotFoundException {
-    return fileHelper.readLinesFromFile(fileName).stream().map(convertStringToInvoice(mapper))
-        .collect(Collectors.toList());
+  public List<Invoice> getInvoices() {
+    return fileInvoiceHelper.readInvoicesFromFile(databaseLocation);
   }
 
-  private Function<String, Invoice> convertStringToInvoice(ObjectMapper mapper) {
-    return invoice -> {
-      try {
-        return mapper.readValue(invoice, Invoice.class);
-      } catch (IOException exception) {
-        throw new RuntimeException(exception);
-      }
-    };
-  }
+  public void updateInvoice(int id, Invoice invoice) {
+    invoice.setId(id);
 
-  public void updateInvoice(int id, Invoice invoice) throws IOException {
-    List<String> list = new ArrayList<>(
-        Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
+    List<Invoice> list = getInvoices();
+    databaseLocation.delete();
+    // TODO what will happen if application crash now?
+    // add handling of temporary file we write to and then replace with origiinal
+
     for (int i = 0; i < list.size(); ++i) {
-      if (list.get(i).contains("" + id)) {
-        invoice.setId(id);
-        list.set(i, mapper.writeValueAsString(invoice));
-        break;
+      if (list.get(i).getId().equals(id)) {
+        list.set(i, invoice);
       }
+      fileInvoiceHelper.saveInvoiceToFile(list.get(i), databaseLocation);
     }
-    Files.write(Paths.get(fileName), list, StandardCharsets.UTF_8);
+  }
+
+  @Override
+  public Invoice getInvoiceById(int id) throws IOException {
+    return null; // TODO implement
   }
 
   public void removeInvoiceById(int id) throws IOException {
-    List<String> list = new ArrayList<>(
-        Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
-    for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).contains("" + id)) {
-        list.remove(id);
+    List<Invoice> list = getInvoices();
+    databaseLocation.delete();
+    // TODO what will happen if application crash now?
+    // add handling of temporary file we write to and then replace with origiinal
+    // TODO - can we make those 2 methods nicer? :)
+
+    for (int i = 0; i < list.size(); ++i) {
+      if (list.get(i).getId().equals(id)) {
+        continue;
       }
-      Files.write(Paths.get(fileName), list, StandardCharsets.UTF_8);
+      fileInvoiceHelper.saveInvoiceToFile(list.get(i), databaseLocation);
     }
   }
 }

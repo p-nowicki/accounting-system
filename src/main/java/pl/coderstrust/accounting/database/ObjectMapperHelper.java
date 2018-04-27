@@ -9,18 +9,26 @@ import java.io.IOException;
 
 public final class ObjectMapperHelper {
 
-  private ObjectMapper mapper;
+  private final ObjectMapper mapper;
 
-  public ObjectMapperHelper(ObjectMapper objectMapper) {
-    this.mapper = objectMapper;
+  public ObjectMapperHelper() {
+    this.mapper = new ObjectMapper();
     this.mapper.registerModule(new JavaTimeModule());
   }
 
-  public String convertInvoiceToJson(Invoice invoice) throws JsonProcessingException {
-    return mapper.writeValueAsString(invoice);
+  public String convertInvoiceToJson(Invoice invoice) {
+    try {
+      return mapper.writeValueAsString(invoice);
+    } catch (JsonProcessingException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
-  public Invoice convertJsonToInvoice(String invoiceAsString) throws IOException {
-    return mapper.readValue(invoiceAsString, Invoice.class);
+  public Invoice convertJsonToInvoice(String invoiceAsString) {
+    try {
+      return mapper.readValue(invoiceAsString, Invoice.class);
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 }

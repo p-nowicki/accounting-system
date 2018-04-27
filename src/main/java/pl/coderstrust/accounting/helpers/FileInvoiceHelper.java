@@ -1,7 +1,6 @@
-package pl.coderstrust.accounting.database.impl.multifile;
+package pl.coderstrust.accounting.helpers;
 
 import pl.coderstrust.accounting.database.ObjectMapperHelper;
-import pl.coderstrust.accounting.logic.FileHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
@@ -15,6 +14,7 @@ public class FileInvoiceHelper {
 
   public FileInvoiceHelper(FileHelper fileHelper, ObjectMapperHelper objectMapperHelper) {
     this.fileHelper = fileHelper;
+    this.objectMapperHelper = objectMapperHelper;
   }
 
   public void saveInvoiceToFile(Invoice invoice, File file) {

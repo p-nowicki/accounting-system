@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.logic;
+package pl.coderstrust.accounting.helpers;
 
 import java.io.BufferedWriter;
 import java.io.File;
