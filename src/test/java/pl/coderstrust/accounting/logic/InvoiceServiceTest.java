@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class InvoiceBookTest {
+public class InvoiceServiceTest {
 
   @Mock
   private Database database;
@@ -31,12 +31,12 @@ public class InvoiceBookTest {
   private Invoice invoice;
 
   @InjectMocks
-  private InvoiceBook invoiceBook;
+  private InvoiceService invoiceService;
 
   @Test
   public void shouldSaveInvoice() throws IOException {
     //when
-    invoiceBook.saveInvoice(invoice);
+    invoiceService.saveInvoice(invoice);
 
     //then
     verify(database).saveInvoice(invoice);
@@ -45,7 +45,7 @@ public class InvoiceBookTest {
   @Test
   public void shouldUpdateInvoice() throws IOException, InvoiceNotFoundException {
     //when
-    invoiceBook.updateInvoice(1, invoice);
+    invoiceService.updateInvoice(1, invoice);
 
     //then
     verify(database).updateInvoice(1, invoice);
@@ -58,7 +58,7 @@ public class InvoiceBookTest {
     when(database.getInvoices()).thenReturn(invoices);
 
     //when
-    Collection<Invoice> result = invoiceBook.getInvoices();
+    Collection<Invoice> result = invoiceService.getInvoices();
 
     //then
     verify(database).getInvoices();
@@ -71,7 +71,7 @@ public class InvoiceBookTest {
     int testId = 1;
 
     //when
-    invoiceBook.removeInvoiceById(testId);
+    invoiceService.removeInvoiceById(testId);
 
     //then
     verify(database).removeInvoiceById(testId);

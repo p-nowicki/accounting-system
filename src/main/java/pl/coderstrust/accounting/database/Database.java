@@ -12,7 +12,7 @@ public interface Database {
 
   Collection<Invoice> getInvoices() throws IOException;
 
-  void updateInvoice(int id, Invoice invoice) throws InvoiceNotFoundException, IOException;
+  int updateInvoice(int id, Invoice invoice) throws InvoiceNotFoundException, IOException;
 
   Invoice getInvoiceById(int id) throws IOException;
 
