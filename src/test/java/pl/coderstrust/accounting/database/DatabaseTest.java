@@ -85,7 +85,8 @@ public abstract class DatabaseTest {
   }
 
   @Test
-  public void shouldSave2InvoicesAndUpdateOneInvoiceNumber() throws IOException, InvoiceNotFoundException {
+  public void shouldSave2InvoicesAndUpdateOneInvoiceNumber()
+      throws IOException, InvoiceNotFoundException {
     //given
     Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();

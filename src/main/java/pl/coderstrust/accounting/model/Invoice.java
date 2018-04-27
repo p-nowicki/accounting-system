@@ -105,7 +105,7 @@ public class Invoice {
   public String toString() {
     return "Invoice{"
         + "id=" + id
-        +  ", number='" + number + '\''
+        + ", number='" + number + '\''
         + ", issueDate=" + issueDate
         + ", buyer=" + buyer
         + ", seller=" + seller

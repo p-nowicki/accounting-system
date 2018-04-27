@@ -35,7 +35,6 @@ public class InvoiceTest {
   @Test
   public void shouldReturnSeller() {
     //given
-    Invoice invoice = new Invoice();
     Company seller = new Company();
 
     seller.setName("SellerCompanyOne");
@@ -43,6 +42,8 @@ public class InvoiceTest {
     seller.setStreet("Poznanska 1");
     seller.setPostCode("65-999");
     seller.setCity("Poznań");
+
+    Invoice invoice = new Invoice();
 
     //when
     invoice.setSeller(seller);
@@ -54,7 +55,6 @@ public class InvoiceTest {
   @Test
   public void shouldReturnBuyer() {
     //given
-    Invoice invoice = new Invoice();
     Company buyer = new Company();
 
     buyer.setName("YoloCompany");
@@ -62,6 +62,8 @@ public class InvoiceTest {
     buyer.setStreet("Warszawska 1");
     buyer.setPostCode("01-000");
     buyer.setCity("Warszawa");
+
+    Invoice invoice = new Invoice();
 
     //when
     invoice.setBuyer(buyer);
@@ -83,6 +85,7 @@ public class InvoiceTest {
     assertEquals(list, invoice.getEntries());
 
   }
+
   @Test
   public void shouldReturnDate() {
     //given

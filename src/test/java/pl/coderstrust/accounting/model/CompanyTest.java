@@ -19,7 +19,7 @@ public class CompanyTest {
   }
 
   @Test
-  public void shouldReturnNIP() {
+  public void shouldReturnNip() {
     //given
     Company company = new Company();
 
