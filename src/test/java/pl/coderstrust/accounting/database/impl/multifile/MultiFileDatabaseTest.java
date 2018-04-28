@@ -12,6 +12,8 @@ import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MultiFileDatabaseTest extends DatabaseTest {
 
@@ -25,7 +27,7 @@ public class MultiFileDatabaseTest extends DatabaseTest {
 
   @Override
   public Database getDatabase() throws IOException {
-    return new MultiFileDatabase(FILES_PATH, fileInvoiceHelper, pathHelper, idGenerator);
+    return new MultiFileDatabase(Paths.get(FILES_PATH), fileInvoiceHelper, pathHelper, idGenerator);
   }
 
   @Before
@@ -34,7 +36,7 @@ public class MultiFileDatabaseTest extends DatabaseTest {
     FileUtils.deleteDirectory(file);
     Files.createDirectories(file.toPath());
 
-    pathHelper = new PathHelper(FILES_PATH);
+    pathHelper = new PathHelper(FILES_PATH.toString());
     fileInvoiceHelper = new FileInvoiceHelper(new FileHelper(), new ObjectMapperHelper());
     idGenerator = new IdGenerator(new File(FILES_PATH), fileInvoiceHelper, pathHelper);
   }

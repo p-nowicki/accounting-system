@@ -45,6 +45,7 @@ public class PathHelper {
 
   public String getPathToDirectory(Invoice invoice) {
     return new StringBuilder(rootPath)
+        .append("/")
         .append(getInvoiceYear(invoice) + "/")
         .append(getInvoiceMonth(invoice) + "/")
         .toString();
