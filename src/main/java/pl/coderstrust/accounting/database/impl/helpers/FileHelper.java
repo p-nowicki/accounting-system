@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.helpers;
+package pl.coderstrust.accounting.database.impl.helpers;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +30,7 @@ public class FileHelper {
     return line;
   }
 
-  public void writeFile(File file, String line) { // TODO writeLineToFile
+  public void writeFile(File file, String line) { // TODO change to writeLineToFile
     try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
       bufferedWriter.write(String.valueOf(line));
       bufferedWriter.newLine();

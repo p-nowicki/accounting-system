@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.database.memory;
+package pl.coderstrust.accounting.database.impl.memory;
 
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.DatabaseTest;

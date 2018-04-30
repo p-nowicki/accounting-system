@@ -1,11 +1,11 @@
-package pl.coderstrust.accounting.database.impl.file;
+package pl.coderstrust.accounting.helpers;
 
 import pl.coderstrust.accounting.model.Company;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.time.LocalDate;
 
-public class InvoiceProvider {
+public class TestInvoiceProvider {
 
   public Invoice invoiceOne() {
     Company buyer = new Company();

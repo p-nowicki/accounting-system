@@ -4,10 +4,10 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.DatabaseTest;
-import pl.coderstrust.accounting.database.IdGenerator;
-import pl.coderstrust.accounting.database.ObjectMapperHelper;
-import pl.coderstrust.accounting.helpers.FileHelper;
-import pl.coderstrust.accounting.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
+import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
+import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 
 import java.io.File;
 import java.io.IOException;
