@@ -1,6 +1,5 @@
-package pl.coderstrust.accounting.helpers;
+package pl.coderstrust.accounting.database.impl.helpers;
 
-import pl.coderstrust.accounting.database.ObjectMapperHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;

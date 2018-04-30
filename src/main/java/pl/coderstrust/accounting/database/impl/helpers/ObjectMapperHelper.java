@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.database;
+package pl.coderstrust.accounting.database.impl.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

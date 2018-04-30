@@ -1,13 +1,13 @@
-package pl.coderstrust.accounting.database.memory;
+package pl.coderstrust.accounting.database.impl.file;
 
 import static junit.framework.TestCase.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import pl.coderstrust.accounting.database.ObjectMapperHelper;
-import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
-import pl.coderstrust.accounting.helpers.FileHelper;
+import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
+import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
+import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class InFileDatabaseTest {
   private File file = new File("src/test/resources/newFile2.txt");
   private FileHelper fileHelper = new FileHelper();
   private InFileDatabase inFileDatabase;
-  private InvoiceProvider invoiceProvider = new InvoiceProvider();
+  private TestInvoiceProvider invoiceProvider = new TestInvoiceProvider();
   // TODO invoice provider should have static methods - no need for object
 
   @Before

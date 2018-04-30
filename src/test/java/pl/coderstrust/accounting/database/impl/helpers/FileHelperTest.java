@@ -1,10 +1,9 @@
-package pl.coderstrust.accounting.logic;
+package pl.coderstrust.accounting.database.impl.helpers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.helpers.FileHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +16,8 @@ import java.util.List;
 public class FileHelperTest {
 
   private FileHelper fileHelper = new FileHelper();
-  private File file = new File("src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
+  private File file = new File(
+      "src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
 
   @Test
   public void shouldReadExistingFile() throws IOException {
