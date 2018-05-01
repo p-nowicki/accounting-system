@@ -21,14 +21,14 @@ public class MultiFileDatabase implements Database {
   private PathHelper pathHelper;
   private IdGenerator idGenerator;
   private Map<Integer, String> fileCache;
-  private File databaseLocation;
+  private String path;
 
-  public MultiFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper,
-      PathHelper pathHelper,
-      IdGenerator idGenerator) throws IOException {
+  public MultiFileDatabase(String path, FileInvoiceHelper fileInvoiceHelper, PathHelper pathHelper,
+      IdGenerator idGenerator)
+      throws IOException {
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.pathHelper = pathHelper;
-    this.databaseLocation = databaseLocation;
+    this.path = path;
     this.fileCache = initializeFileCache();
     this.idGenerator = idGenerator;
   }
@@ -61,7 +61,7 @@ public class MultiFileDatabase implements Database {
   @Override
   public List<Invoice> getInvoices() {
     List<Invoice> invoiceList = new ArrayList<>();
-    List<File> files = pathHelper.listFiles(databaseLocation);
+    List<File> files = pathHelper.listFiles(new File(path));
     for (File file : files) {
       invoiceList.addAll(fileInvoiceHelper.readInvoicesFromFile(file));
     }

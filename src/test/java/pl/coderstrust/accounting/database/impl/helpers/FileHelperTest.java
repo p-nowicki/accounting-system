@@ -16,8 +16,7 @@ import java.util.List;
 public class FileHelperTest {
 
   private FileHelper fileHelper = new FileHelper();
-  private File file = new File(
-      "src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
+  private File file = new File("src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
 
   @Test
   public void shouldReadExistingFile() throws IOException {
