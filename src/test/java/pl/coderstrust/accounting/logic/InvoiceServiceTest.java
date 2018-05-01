@@ -13,10 +13,8 @@ import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import java.io.IOException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

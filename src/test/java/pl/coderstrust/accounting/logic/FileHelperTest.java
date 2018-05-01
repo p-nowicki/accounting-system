@@ -7,6 +7,7 @@ import org.junit.Test;
 import pl.coderstrust.accounting.helpers.FileHelper;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +18,8 @@ import java.util.List;
 public class FileHelperTest {
 
   private FileHelper fileHelper = new FileHelper();
-  private File file = new File("src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
+  private File file = new File(
+      "src/test/resources/newFile.txt"); // TODO should use temporaryFile / folder Junit rule
 
   @Test
   public void shouldReadExistingFile() throws IOException {
@@ -34,7 +36,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void shouldWriteListToFile() throws IOException {
+  public void shouldWriteListToFile()  {
     //given
     file.delete();
     String expected = "some text to check";
