@@ -7,7 +7,9 @@ import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +59,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getInvoices() throws IOException {
+  public List<Invoice> getInvoices() {
     List<Invoice> invoiceList = new ArrayList<>();
     List<File> files = pathHelper.listFiles(databaseLocation);
     for (File file : files) {
@@ -67,7 +69,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) throws IOException {
+  public Invoice getInvoiceById(int id)  {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
@@ -80,7 +82,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+  public void removeInvoiceById(int id) throws InvoiceNotFoundException {
     throwExceptionIfInvoiceNotInDatabase(id);
 
     File file = new File(fileCache.get(id));

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,7 +35,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void shouldWriteListToFile() throws IOException {
+  public void shouldWriteListToFile()  {
     //given
     file.delete();
     String expected = "some text to check";

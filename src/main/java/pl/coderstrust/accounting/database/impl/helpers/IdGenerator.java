@@ -4,7 +4,7 @@ import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
-import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.OptionalInt;
@@ -16,8 +16,7 @@ public class IdGenerator {
   private FileInvoiceHelper fileInvoiceHelper;
   private PathHelper pathHelper;
 
-  public IdGenerator(File databaseLocation, FileInvoiceHelper fileHelper, PathHelper pathGenerator)
-      throws IOException {
+  public IdGenerator(File databaseLocation, FileInvoiceHelper fileHelper, PathHelper pathGenerator){
     this.fileInvoiceHelper = fileHelper;
     this.pathHelper = pathGenerator;
     currentId = new AtomicInteger(getCurrentId(databaseLocation).orElseGet(() -> 0));
@@ -27,13 +26,13 @@ public class IdGenerator {
     return currentId.getAndIncrement();
   }
 
-  private OptionalInt getCurrentId(File databaseLocation) throws IOException {
+  private OptionalInt getCurrentId(File databaseLocation) {
     return Files.isRegularFile(Paths.get(databaseLocation.getAbsolutePath()))
         ? getCurrentIdFromOneFile(databaseLocation)
         : getCurrentIdFromMultiFile(databaseLocation);
   }
 
-  private OptionalInt getCurrentIdFromOneFile(File databaseLocation) throws IOException {
+  private OptionalInt getCurrentIdFromOneFile(File databaseLocation) {
     return fileInvoiceHelper
         .readInvoicesFromFile(databaseLocation)
         .stream()
@@ -41,7 +40,7 @@ public class IdGenerator {
         .max();
   }
 
-  private OptionalInt getCurrentIdFromMultiFile(File databaseLocation) throws IOException {
+  private OptionalInt getCurrentIdFromMultiFile(File databaseLocation) {
     return pathHelper.listFiles(databaseLocation)
         .stream()
         .flatMap(file -> fileInvoiceHelper.readInvoicesFromFile(file).stream())
