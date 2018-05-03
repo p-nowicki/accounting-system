@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.database.memory;
+package pl.coderstrust.accounting.database.impl.memory;
 
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;

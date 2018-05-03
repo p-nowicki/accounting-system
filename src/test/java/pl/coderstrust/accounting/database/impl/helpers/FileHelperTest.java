@@ -1,10 +1,9 @@
-package pl.coderstrust.accounting.logic;
+package pl.coderstrust.accounting.database.impl.helpers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.helpers.FileHelper;
 
 import java.io.File;
 

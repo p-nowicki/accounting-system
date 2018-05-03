@@ -1,9 +1,9 @@
 package pl.coderstrust.accounting.database.impl.multifile;
 
 import pl.coderstrust.accounting.database.Database;
-import pl.coderstrust.accounting.database.IdGenerator;
+import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
-import pl.coderstrust.accounting.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
@@ -24,10 +24,9 @@ public class MultiFileDatabase implements Database {
   private Map<Integer, String> fileCache;
   private String path;
 
-  // TODO pass path
+  // TODO pass File instead of string.
   public MultiFileDatabase(String path, FileInvoiceHelper fileInvoiceHelper, PathHelper pathHelper,
-      IdGenerator idGenerator)
-      throws IOException {
+      IdGenerator idGenerator) throws IOException {
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.pathHelper = pathHelper;
     this.path = path;

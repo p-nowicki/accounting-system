@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
+import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
@@ -17,9 +17,9 @@ public abstract class DatabaseTest {
   @Test
   public void shouldSaveInvoice() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
+    Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new TestInvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -46,9 +46,9 @@ public abstract class DatabaseTest {
   @Test
   public void shouldSave3InvoicesAndVerifyId() throws IOException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
+    Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new TestInvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -68,9 +68,9 @@ public abstract class DatabaseTest {
   @Test
   public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
-    Invoice invoiceProviderThree = new InvoiceProvider().invoiceThree();
+    Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderThree = new TestInvoiceProvider().invoiceThree();
     Database db = getDatabase();
 
     //when
@@ -88,8 +88,8 @@ public abstract class DatabaseTest {
   public void shouldSave2InvoicesAndUpdateOneInvoiceNumber()
       throws IOException, InvoiceNotFoundException {
     //given
-    Invoice invoiceProviderOne = new InvoiceProvider().invoiceOne();
-    Invoice invoiceProviderTwo = new InvoiceProvider().invoiceTwo();
+    Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
+    Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
     Database db = getDatabase();
 
     //when

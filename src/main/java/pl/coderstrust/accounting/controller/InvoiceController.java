@@ -20,6 +20,8 @@ import java.util.Collection;
 @RequestMapping("/invoices")
 public class InvoiceController {
 
+  // TODO - add validator - class which is checking if provided invoice is the correct one
+  // (all required fields are filled etc)
   private InvoiceService invoiceService;
 
   @Autowired

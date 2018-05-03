@@ -1,7 +1,6 @@
-package pl.coderstrust.accounting.database;
+package pl.coderstrust.accounting.database.impl.helpers;
 
 import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
-import pl.coderstrust.accounting.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
