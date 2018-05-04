@@ -3,7 +3,6 @@ package pl.coderstrust.accounting.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

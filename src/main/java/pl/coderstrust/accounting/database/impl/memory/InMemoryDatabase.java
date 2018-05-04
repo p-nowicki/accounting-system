@@ -5,7 +5,6 @@ import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.util.Collection;
-
 import java.util.HashMap;
 import java.util.Map;
 

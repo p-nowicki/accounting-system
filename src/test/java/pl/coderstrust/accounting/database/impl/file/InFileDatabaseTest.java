@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
 import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
-import pl.coderstrust.accounting.database.impl.multifile.MultiFileDatabase;
 import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

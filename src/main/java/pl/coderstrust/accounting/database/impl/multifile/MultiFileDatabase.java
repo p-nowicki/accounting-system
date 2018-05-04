@@ -7,9 +7,7 @@ import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
-
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,8 @@ public class MultiFileDatabase implements Database {
   private Map<Integer, String> fileCache;
   private File databaseLocation;
 
-  public MultiFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper, PathHelper pathHelper,
+  public MultiFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper,
+      PathHelper pathHelper,
       IdGenerator idGenerator) throws IOException {
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.pathHelper = pathHelper;
@@ -69,7 +68,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id)  {
+  public Invoice getInvoiceById(int id) {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
