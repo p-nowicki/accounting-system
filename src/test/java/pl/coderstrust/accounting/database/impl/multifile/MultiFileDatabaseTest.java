@@ -12,8 +12,6 @@ import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class MultiFileDatabaseTest extends DatabaseTest {
 

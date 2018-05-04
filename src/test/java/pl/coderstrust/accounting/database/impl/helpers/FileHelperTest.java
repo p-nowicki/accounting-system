@@ -34,7 +34,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void shouldWriteListToFile() throws IOException {
+  public void shouldWriteListToFile() {
     //given
     file.delete();
     String expected = "some text to check";

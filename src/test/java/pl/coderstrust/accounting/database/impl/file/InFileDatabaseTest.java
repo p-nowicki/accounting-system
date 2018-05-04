@@ -30,7 +30,7 @@ public class InFileDatabaseTest {
   }
 
   @Test
-  public void shouldSaveInvoice() throws IOException {
+  public void shouldSaveInvoice() {
     //given
     Invoice invoice = invoiceProvider.invoiceOne();
     invoice.setId(1);
@@ -57,6 +57,9 @@ public class InFileDatabaseTest {
 
     //then
     List<String> list = fileHelper.readLinesFromFile(file);
+    for (String string : list) {
+      System.out.println(string);
+    }
     Assert.assertEquals(2, list.size());
 
     // TODO -- verify if good invoice was removed
@@ -81,6 +84,20 @@ public class InFileDatabaseTest {
     //then
     List<String> list = fileHelper.readLinesFromFile(file);
     assertEquals(expected, list);
+  }
+
+  @Test
+  public void checkIsGoodInvoiceSearch() throws IOException {
+    inFileDatabase.saveInvoice(invoiceProvider.invoiceOne());
+    inFileDatabase.saveInvoice(invoiceProvider.invoiceTwo());
+    inFileDatabase.saveInvoice(invoiceProvider.invoiceThree());
+    String expected = "Invoice{id=1, number='FV123/1', issueDate=2017-12-30, "
+        + "buyer=Company{name='YoloCompany', nip=1231231212, street='Warszawska 1', "
+        + "postCode='01-000', city='Warszawa'}, seller=Company{name='SellerCompanyOne',"
+        + " nip=1233215678, street='Poznanska 1', postCode='65-999', city='Poznan'}, entries=[]}";
+    String given = String.valueOf(inFileDatabase.getInvoiceById(1));
+
+    assertEquals(expected, given);
   }
 }
 

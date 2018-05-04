@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) throws IOException {
+  public Invoice getInvoiceById(int id) {
     return invoices.get(id);
   }
 }

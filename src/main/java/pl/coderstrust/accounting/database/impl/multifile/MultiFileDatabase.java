@@ -22,7 +22,8 @@ public class MultiFileDatabase implements Database {
   private Map<Integer, String> fileCache;
   private File databaseLocation;
 
-  public MultiFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper, PathHelper pathHelper,
+  public MultiFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper,
+      PathHelper pathHelper,
       IdGenerator idGenerator) throws IOException {
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.pathHelper = pathHelper;
@@ -57,7 +58,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getInvoices() throws IOException {
+  public List<Invoice> getInvoices() {
     List<Invoice> invoiceList = new ArrayList<>();
     List<File> files = pathHelper.listFiles(databaseLocation);
     for (File file : files) {
@@ -67,7 +68,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) throws IOException {
+  public Invoice getInvoiceById(int id) {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
@@ -80,7 +81,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+  public void removeInvoiceById(int id) throws InvoiceNotFoundException {
     throwExceptionIfInvoiceNotInDatabase(id);
 
     File file = new File(fileCache.get(id));
