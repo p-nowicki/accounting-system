@@ -5,11 +5,8 @@ import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
-
 import java.io.File;
-
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +67,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id)  {
+  public Invoice getInvoiceById(int id) {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }

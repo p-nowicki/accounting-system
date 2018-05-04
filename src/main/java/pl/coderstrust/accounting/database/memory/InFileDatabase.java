@@ -2,10 +2,10 @@ package pl.coderstrust.accounting.database.memory;
 
 
 import pl.coderstrust.accounting.database.Database;
-import pl.coderstrust.accounting.database.IdGenerator;
-import pl.coderstrust.accounting.database.ObjectMapperHelper;
-import pl.coderstrust.accounting.helpers.FileHelper;
-import pl.coderstrust.accounting.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
+import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
+import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class InFileDatabase implements Database {
   }
 
   // TODO this class can be part some specific behaviour of multifileDatabase - just writing to single file
-  InFileDatabase(File databaseLocation) {
+  public InFileDatabase(File databaseLocation) {
     this.databaseLocation = databaseLocation;
     id = getInvoices() // TODO reuse method from multifile
         .stream()

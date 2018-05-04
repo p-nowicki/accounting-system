@@ -5,14 +5,12 @@ import static junit.framework.TestCase.assertEquals;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import pl.coderstrust.accounting.database.ObjectMapperHelper;
-import pl.coderstrust.accounting.database.impl.file.InvoiceProvider;
+import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
+import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import pl.coderstrust.accounting.database.impl.multifile.MultiFileDatabase;
-import pl.coderstrust.accounting.helpers.FileHelper;
+import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
-
 import java.io.File;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +20,7 @@ public class InFileDatabaseTest {
   private File file = new File("src/test/resources/newFile2.txt");
   private FileHelper fileHelper = new FileHelper();
   private InFileDatabase inFileDatabase;
-  private InvoiceProvider invoiceProvider = new InvoiceProvider();
+  private TestInvoiceProvider invoiceProvider = new TestInvoiceProvider();
   MultiFileDatabase multiFileDatabase;
   // TODO invoice provider should have static methods - no need for object
 
@@ -33,7 +31,7 @@ public class InFileDatabaseTest {
   }
 
   @Test
-  public void shouldSaveInvoice() {
+  public void shouldSaveInvoice() throws IOException {
     //given
     Invoice invoice = invoiceProvider.invoiceOne();
     invoice.setId(1);

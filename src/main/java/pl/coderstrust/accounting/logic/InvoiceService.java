@@ -4,9 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
-
 import java.io.IOException;
-
 import java.util.Collection;
 
 @Service
@@ -33,5 +31,4 @@ public class InvoiceService {
   public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
     database.removeInvoiceById(id);
   }
-
 }
