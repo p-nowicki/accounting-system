@@ -40,7 +40,7 @@ public class FileHelperTest {
     String expected = "some text to check";
 
     //when
-    fileHelper.writeFile(file, expected);
+    fileHelper.writeLineToFile(file, expected);
     List<String> result = fileHelper.readLinesFromFile(file);
 
     //then

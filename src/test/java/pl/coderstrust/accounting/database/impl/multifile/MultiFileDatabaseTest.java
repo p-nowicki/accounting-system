@@ -12,10 +12,12 @@ import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MultiFileDatabaseTest extends DatabaseTest {
 
-  private static final String FILES_PATH = "src/test/resources/MultiFileDatabase/";
+  private static final File FILES_PATH = new File("src/test/resources/MultiFileDatabase/");
   private FileInvoiceHelper fileInvoiceHelper;
   private IdGenerator idGenerator;
   private PathHelper pathHelper;
@@ -30,12 +32,11 @@ public class MultiFileDatabaseTest extends DatabaseTest {
 
   @Before
   public void setup() throws IOException {
-    File file = new File(FILES_PATH);
-    FileUtils.deleteDirectory(file);
-    Files.createDirectories(file.toPath());
+    FileUtils.deleteDirectory(FILES_PATH);
+    Files.createDirectories(FILES_PATH.toPath());
 
     pathHelper = new PathHelper(FILES_PATH);
     fileInvoiceHelper = new FileInvoiceHelper(new FileHelper(), new ObjectMapperHelper());
-    idGenerator = new IdGenerator(new File(FILES_PATH), fileInvoiceHelper, pathHelper);
+    idGenerator = new IdGenerator(FILES_PATH, fileInvoiceHelper, pathHelper);
   }
 }
