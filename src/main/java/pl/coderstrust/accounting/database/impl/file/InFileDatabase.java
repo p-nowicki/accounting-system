@@ -1,9 +1,9 @@
 package pl.coderstrust.accounting.database.impl.file;
 
 import pl.coderstrust.accounting.database.Database;
-import pl.coderstrust.accounting.database.IdGenerator;
 import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
 import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
 import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
