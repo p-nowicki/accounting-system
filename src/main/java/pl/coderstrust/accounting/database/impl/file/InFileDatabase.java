@@ -1,51 +1,43 @@
 package pl.coderstrust.accounting.database.impl.file;
 
 import pl.coderstrust.accounting.database.Database;
-import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
 import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
-import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
-import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGeneratorForInFileDataBase;
+import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class InFileDatabase implements Database {
 
   private File databaseLocation;
-  private FileInvoiceHelper fileInvoiceHelper = new FileInvoiceHelper(new FileHelper(),
-      new ObjectMapperHelper()); // TODO implement dependency injection
-  private IdGenerator idGenerator;
-  private int id;// TODO reuse IdGenerator from multifileDatabase
+  private FileInvoiceHelper fileInvoiceHelper;
+  private PathHelper pathHelper;
+  private IdGeneratorForInFileDataBase idGenerator;
+  private Map<Integer, String> fileCache;
 
   public InFileDatabase(File databaseLocation,
-      FileInvoiceHelper fileInvoiceHelper, IdGenerator idGenerator) {
+      FileInvoiceHelper fileInvoiceHelper, IdGeneratorForInFileDataBase idGenerator) {
     this.databaseLocation = databaseLocation;
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.idGenerator = idGenerator;
   }
 
-  // TODO this class can be part some specific behaviour of multifileDatabase - just writing to single file
-  InFileDatabase(File databaseLocation) {
-    this.databaseLocation = databaseLocation;
-    id = getInvoices() // TODO reuse method from multifile (id generator)
-        .stream()
-        .max(Comparator.comparing(Invoice::getId))
-        .orElse(new Invoice())
-        .getId() + 1;
-  }
-
   @Override
-  public int saveInvoice(Invoice invoice) {
-    invoice.setId(id);
+  public int saveInvoice(Invoice invoice)  {
+    if (invoice.getId() == 0) {
+      invoice.setId(idGenerator.generateNextId());
+    }
     fileInvoiceHelper.saveInvoiceToFile(invoice, databaseLocation);
-    return id++;
+    return invoice.getId();
   }
 
   public List<Invoice> getInvoices() {
@@ -67,12 +59,10 @@ public class InFileDatabase implements Database {
 
   @Override
   public Invoice getInvoiceById(int id) {
-    List<Invoice> invoicesList = getInvoices();
-    return invoicesList
+    return fileInvoiceHelper.readInvoicesFromFile(databaseLocation)
         .stream()
-        .filter(invoice -> invoice.getId().equals(id))
-        .findAny()
-        .orElse(null);
+        .filter(invoice -> invoice.getId() == (id))
+        .findFirst().get();
   }
 
   public void removeInvoiceById(int id) throws IOException {
