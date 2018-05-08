@@ -14,9 +14,9 @@ public class PathHelper {
 
   private static final String EXTENSION_SUFFIX = ".json";
 
-  private String rootPath;
+  private File rootPath;
 
-  public PathHelper(String rootPath) {
+  public PathHelper(File rootPath) {
     this.rootPath = rootPath;
   }
 
@@ -37,13 +37,9 @@ public class PathHelper {
     return Files.createDirectories(directory);
   }
 
-  public boolean createFile(String path) throws IOException {
-    File file = new File(path);
-    return file.createNewFile();
-  }
-
   public String getPathToDirectory(Invoice invoice) {
-    return new StringBuilder(rootPath)
+    return new StringBuilder(rootPath.getAbsolutePath())
+        .append("/")
         .append(getInvoiceYear(invoice) + "/")
         .append(getInvoiceMonth(invoice) + "/")
         .toString();

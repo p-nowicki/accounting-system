@@ -1,5 +1,4 @@
-package pl.coderstrust.accounting.database.memory;
-
+package pl.coderstrust.accounting.database.impl.file;
 
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
@@ -9,7 +8,6 @@ import pl.coderstrust.accounting.database.impl.helpers.ObjectMapperHelper;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,10 +20,9 @@ public class InFileDatabase implements Database {
 
   private File databaseLocation;
   private FileInvoiceHelper fileInvoiceHelper = new FileInvoiceHelper(new FileHelper(),
-      new ObjectMapperHelper());
+      new ObjectMapperHelper()); // TODO implement dependency injection
   private IdGenerator idGenerator;
-  private int id;// TODO reuse IdHelper from multifileDatabase
-  // TODO implement dependency injection
+  private int id;// TODO reuse IdGenerator from multifileDatabase
 
   public InFileDatabase(File databaseLocation,
       FileInvoiceHelper fileInvoiceHelper, IdGenerator idGenerator) {
@@ -35,9 +32,9 @@ public class InFileDatabase implements Database {
   }
 
   // TODO this class can be part some specific behaviour of multifileDatabase - just writing to single file
-  public InFileDatabase(File databaseLocation) {
+  InFileDatabase(File databaseLocation) {
     this.databaseLocation = databaseLocation;
-    id = getInvoices() // TODO reuse method from multifile
+    id = getInvoices() // TODO reuse method from multifile (id generator)
         .stream()
         .max(Comparator.comparing(Invoice::getId))
         .orElse(new Invoice())

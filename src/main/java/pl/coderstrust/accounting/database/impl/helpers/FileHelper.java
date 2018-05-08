@@ -30,7 +30,7 @@ public class FileHelper {
     return line;
   }
 
-  public void writeFile(File file, String line) { // TODO change to writeLineToFile
+  public void writeLineToFile(File file, String line) {
     try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
       bufferedWriter.write(String.valueOf(line));
       bufferedWriter.newLine();

@@ -16,7 +16,7 @@ public class FileInvoiceHelper {
   }
 
   public void saveInvoiceToFile(Invoice invoice, File file) {
-    fileHelper.writeFile(file, objectMapperHelper.convertInvoiceToJson(invoice));
+    fileHelper.writeLineToFile(file, objectMapperHelper.convertInvoiceToJson(invoice));
   }
 
   public List<Invoice> readInvoicesFromFile(File file) {
