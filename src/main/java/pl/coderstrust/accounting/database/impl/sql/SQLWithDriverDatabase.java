@@ -1,6 +1,7 @@
 package pl.coderstrust.accounting.database.impl.sql;
 
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.AGE;
+import static pl.coderstrust.accounting.database.impl.sql.TableLabels.CITY;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.CITY_BUYER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.CITY_SELLER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.COMPANY;
@@ -12,26 +13,29 @@ import static pl.coderstrust.accounting.database.impl.sql.TableLabels.INVOICE_ID
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.ISSUE_DATE;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NAME;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NAME_BUYER;
+import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NAME_COMPANY;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NAME_SELLER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NIP;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NIP_BUYER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NIP_SELLER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NUMBER;
+import static pl.coderstrust.accounting.database.impl.sql.TableLabels.POSTAL_CODE;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.POSTAL_CODE_BUYER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.POSTAL_CODE_SELLER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.PRICE;
+import static pl.coderstrust.accounting.database.impl.sql.TableLabels.STREET;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.STREET_BUYER;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.STREET_SELLER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import pl.coderstrust.accounting.builders.CompanyBuilder;
+import pl.coderstrust.accounting.builders.InvoiceBuilder;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Company;
 import pl.coderstrust.accounting.model.Invoice;
 import pl.coderstrust.accounting.model.InvoiceEntry;
-import pl.coderstrust.accounting.objectBuilders.CompanyBuilder;
-import pl.coderstrust.accounting.objectBuilders.InvoiceBuilder;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -61,12 +65,12 @@ public class SQLWithDriverDatabase implements Database {
   public synchronized int saveInvoice(Invoice invoice) {
 
     if (!getCompaniesNipNumbers().contains(invoice.getBuyer().getNip())) {
-      String queryBuyer = getBuyerQuery(invoice);
+      String queryBuyer = getInsertCompanyQuery(invoice.getBuyer());
       getStatement(queryBuyer);
     }
 
     if (!getCompaniesNipNumbers().contains(invoice.getSeller().getNip())) {
-      String querySeller = getSellerQuery(invoice);
+      String querySeller = getInsertCompanyQuery(invoice.getSeller());
       getStatement(querySeller);
     }
 
@@ -80,9 +84,9 @@ public class SQLWithDriverDatabase implements Database {
         resultSet.next();
         id = resultSet.getInt(ID.getLabel());
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      throw new IllegalArgumentException("query id:" + e.getMessage());
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      throw new IllegalArgumentException("query id:" + ex.getMessage());
     }
 
     for (InvoiceEntry invoiceEntry : invoice.getEntries()) {
@@ -114,8 +118,8 @@ public class SQLWithDriverDatabase implements Database {
         }
         return getInvoice(resultSet);
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
     }
     return null;
   }
@@ -123,14 +127,20 @@ public class SQLWithDriverDatabase implements Database {
   @Override
   public void updateInvoice(int id, Invoice invoice) {
 
-    //TODO queries to update
     if (!getCompaniesNipNumbers().contains(invoice.getBuyer().getNip())) {
-      String queryCustomer = getBuyerQuery(invoice);
+      String queryCustomer = getInsertCompanyQuery(invoice.getBuyer());
+      getStatement(queryCustomer);
+    } else {
+      String queryCustomer = getUpdateCompanyQuery(invoice.getBuyer());
       getStatement(queryCustomer);
     }
+
     if (!getCompaniesNipNumbers().contains(invoice.getSeller().getNip())) {
-      String querySupplier = getSellerQuery(invoice);
+      String querySupplier = getInsertCompanyQuery(invoice.getSeller());
       getStatement(querySupplier);
+    } else {
+      String queryCustomer = getUpdateCompanyQuery(invoice.getSeller());
+      getStatement(queryCustomer);
     }
 
     String queryInvoice = getUpdateInvoiceQuery(invoice);
@@ -162,8 +172,8 @@ public class SQLWithDriverDatabase implements Database {
           invoiceList.add(getInvoice(resultSet));
         } while (resultSet.next());
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
     }
     return invoiceList;
   }
@@ -238,23 +248,13 @@ public class SQLWithDriverDatabase implements Database {
         .toString();
   }
 
-  private String getSellerQuery(Invoice invoice) {
+  private String getInsertCompanyQuery(Company company) {
     return new StringBuilder("INSERT INTO " + COMPANY.getLabel() + " VALUES (")
-        .append("'" + invoice.getSeller().getName() + "', ")
-        .append("'" + invoice.getSeller().getStreet() + "', ")
-        .append("'" + invoice.getSeller().getPostCode() + "', ")
-        .append("'" + invoice.getSeller().getCity() + "', ")
-        .append("'" + invoice.getSeller().getNip() + "');")
-        .toString();
-  }
-
-  private String getBuyerQuery(Invoice invoice) {
-    return new StringBuilder("INSERT INTO " + COMPANY.getLabel() + " VALUES (")
-        .append("'" + invoice.getBuyer().getName() + "', ")
-        .append("'" + invoice.getBuyer().getStreet() + "', ")
-        .append("'" + invoice.getBuyer().getPostCode() + "', ")
-        .append("'" + invoice.getBuyer().getCity() + "', ")
-        .append("'" + invoice.getBuyer().getNip() + "');")
+        .append("'" + company.getName() + "', ")
+        .append("'" + company.getStreet() + "', ")
+        .append("'" + company.getPostCode() + "', ")
+        .append("'" + company.getCity() + "', ")
+        .append("'" + company.getNip() + "');")
         .toString();
   }
 
@@ -277,7 +277,7 @@ public class SQLWithDriverDatabase implements Database {
         .append(NIP_SELLER.getLabel() + "='" + invoice.getSeller().getNip() + "', ")
         .append(NAME.getLabel() + "='" + invoice.getName() + "', ")
         .append(AGE.getLabel() + "='" + invoice.getAge() + "'")
-        .append(" WHERE " + ID.getLabel() + "=" + invoice.getId() + ";")
+        .append(" WHERE " + ID.getLabel() + "='" + invoice.getId() + "';")
         .toString();
   }
 
@@ -291,12 +291,22 @@ public class SQLWithDriverDatabase implements Database {
         .toString();
   }
 
+  private String getUpdateCompanyQuery(Company company) {
+    return new StringBuilder("UPDATE " + COMPANY.getLabel() + " SET ")
+        .append(NAME_COMPANY.getLabel() + "='" + company.getName() + "', ")
+        .append(STREET.getLabel() + "='" + company.getStreet() + "', ")
+        .append(POSTAL_CODE + "='" + company.getPostCode() + "', ")
+        .append(CITY.getLabel() + "='" + company.getCity() + "'")
+        .append(" WHERE " + NIP.getLabel() + "=" + company.getNip() + ";")
+        .toString();
+  }
+
   private void getStatement(String query) {
     try (Statement statement = connection.createStatement()) {
       statement.executeUpdate(query);
-    } catch (SQLException e) {
-      e.printStackTrace();
-      throw new IllegalArgumentException(e.getMessage());
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      throw new IllegalArgumentException(ex.getMessage());
     }
   }
 
@@ -304,9 +314,9 @@ public class SQLWithDriverDatabase implements Database {
     try (PreparedStatement preparedStatement = connection.prepareStatement(queryEntries)) {
       preparedStatement.setInt(1, id);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      throw new IllegalArgumentException(e.getMessage());
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      throw new IllegalArgumentException(ex.getMessage());
     }
   }
 
@@ -319,9 +329,9 @@ public class SQLWithDriverDatabase implements Database {
           companiesNipNumbers.add(resultSet.getInt(NIP.getLabel()));
         }
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      throw new IllegalArgumentException(e.getMessage());
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      throw new IllegalArgumentException(ex.getMessage());
     }
     return companiesNipNumbers;
   }

@@ -1,4 +1,4 @@
-package pl.coderstrust.accounting.objectBuilders;
+package pl.coderstrust.accounting.builders;
 
 import pl.coderstrust.accounting.model.Company;
 import pl.coderstrust.accounting.model.Invoice;

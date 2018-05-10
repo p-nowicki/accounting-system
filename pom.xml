@@ -62,6 +62,12 @@
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>pl/coderstrust/accounting/database/impl/sql/*</exclude>
+                <exclude>pl/coderstrust/accounting/builders/*</exclude>
+              </excludes>
+            </configuration>
           </execution>
           <execution>
             <id>default-prepare-agent</id>
@@ -75,6 +81,10 @@
               <goal>check</goal>
             </goals>
             <configuration>
+                <excludes>
+                  <exclude>pl/coderstrust/accounting/database/impl/sql/*</exclude>
+                  <exclude>pl/coderstrust/accounting/builders/*</exclude>
+                </excludes>
               <rules>
                 <rule>
                   <element>BUNDLE</element>

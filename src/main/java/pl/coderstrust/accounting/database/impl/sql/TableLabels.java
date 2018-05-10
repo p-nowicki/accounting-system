@@ -9,6 +9,11 @@ public enum TableLabels {
 
   COMPANY("\"Company\""),
   NIP("nip"),
+  NAME_COMPANY("name"),
+  STREET("street"),
+  POSTAL_CODE("postal_code"),
+  CITY("city"),
+
   NAME_BUYER("name_buyer"),
   STREET_BUYER("street_buyer"),
   POSTAL_CODE_BUYER("postal_code_buyer"),
