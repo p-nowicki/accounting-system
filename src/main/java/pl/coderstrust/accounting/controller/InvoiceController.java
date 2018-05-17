@@ -1,5 +1,6 @@
 package pl.coderstrust.accounting.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import pl.coderstrust.accounting.model.Invoice;
 import java.io.IOException;
 import java.util.Collection;
 
+@Api(value = "/invoices", description = "Invoicing system")
+//@Produces({"application/json", "application/xml"})
 @RestController
 @RequestMapping("/invoices")
 public class InvoiceController {
