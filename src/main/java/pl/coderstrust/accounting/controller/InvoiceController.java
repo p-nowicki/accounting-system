@@ -54,14 +54,34 @@ public class InvoiceController {
   }
 
   @PutMapping("/{id}")
-  public void updateInvoice(@PathVariable int id, @RequestBody Invoice invoice)
+  public ResponseEntity<?> updateInvoice(@PathVariable int id, @RequestBody Invoice updatedInvoice)
       throws IOException, InvoiceNotFoundException {
-    invoiceService.updateInvoice(id, invoice);
+
+    Optional<Invoice> invoiceOptional = invoiceService.getInvoices().stream()
+        .filter(invoice -> invoice.getId().equals(id)).findAny();
+
+    if (!invoiceOptional.isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    invoiceService.updateInvoice(id, updatedInvoice);
+
+    return ResponseEntity.ok().build();
   }
 
-  @DeleteMapping
-  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+
+    Optional<Invoice> invoiceOptional = invoiceService.getInvoices().stream()
+        .filter(invoice -> invoice.getId().equals(id)).findAny();
+
+    if (!invoiceOptional.isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+
     invoiceService.removeInvoiceById(id);
+
+    return ResponseEntity.ok().build();
   }
 
 }
