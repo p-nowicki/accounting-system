@@ -9,13 +9,14 @@ import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public abstract class DatabaseTest {
 
-  protected abstract Database getDatabase() throws IOException;
+  protected abstract Database getDatabase() throws IOException, SQLException;
 
   @Test
-  public void shouldSaveInvoice() throws IOException {
+  public void shouldSaveInvoice() throws IOException, SQLException {
     //given
     Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
@@ -31,12 +32,12 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoiceById(0);
+    Invoice result = db.getInvoiceById(1);
     assertEquals(invoiceProviderOne, result);
   }
 
   @Test
-  public void shouldSave3InvoicesAndVerifyId() throws IOException {
+  public void shouldSave3InvoicesAndVerifyId() throws IOException, SQLException {
     //given
     Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
@@ -52,13 +53,13 @@ public abstract class DatabaseTest {
     int idOne = invoiceProviderOne.getId(); // I am not sure it should be in then.
     int idTwo = invoiceProviderTwo.getId();
     int idThree = invoiceProviderThree.getId();
-    assertEquals(0, idOne);
-    assertEquals(1, idTwo);
-    assertEquals(2, idThree);
+    assertEquals(1, idOne);
+    assertEquals(2, idTwo);
+    assertEquals(3, idThree);
   }
 
   @Test
-  public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException {
+  public void shouldSave3InvoicesAndRemoveOne() throws IOException, InvoiceNotFoundException, SQLException {
     //given
     Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();
@@ -69,7 +70,7 @@ public abstract class DatabaseTest {
     db.saveInvoice(invoiceProviderOne);
     db.saveInvoice(invoiceProviderTwo);
     db.saveInvoice(invoiceProviderThree);
-    db.removeInvoiceById(0);
+    db.removeInvoiceById(1);
     db.getInvoices();
 
     //then
@@ -78,7 +79,7 @@ public abstract class DatabaseTest {
 
   @Test
   public void shouldSave2InvoicesAndUpdateOneInvoiceNumber()
-      throws IOException, InvoiceNotFoundException {
+      throws IOException, InvoiceNotFoundException, SQLException {
     //given
     Invoice invoiceProviderOne = new TestInvoiceProvider().invoiceOne();
     Invoice invoiceProviderTwo = new TestInvoiceProvider().invoiceTwo();

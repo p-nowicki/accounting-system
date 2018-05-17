@@ -34,6 +34,7 @@ public class InvoiceService {
   public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
     database.removeInvoiceById(id);
   }
+
   public Invoice getInvById(int id) throws InvoiceNotFoundException, IOException {
     return database.getInvoiceById(id);
   }

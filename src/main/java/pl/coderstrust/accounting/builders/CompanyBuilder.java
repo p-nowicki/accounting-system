@@ -19,6 +19,7 @@ public class CompanyBuilder {
     company.setCity(city);
     return this;
   }
+
   public CompanyBuilder name(String name) {
     company.setName(name);
     return this;
