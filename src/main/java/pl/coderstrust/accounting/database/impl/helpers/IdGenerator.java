@@ -19,7 +19,7 @@ public class IdGenerator {
       PathHelper pathGenerator) {
     this.fileInvoiceHelper = fileHelper;
     this.pathHelper = pathGenerator;
-    currentId = new AtomicInteger(getCurrentId(databaseLocation).orElseGet(() -> 0));
+    currentId = new AtomicInteger(getCurrentId(databaseLocation).orElseGet(() -> 1));
   }
 
   public int generateNextId() {
