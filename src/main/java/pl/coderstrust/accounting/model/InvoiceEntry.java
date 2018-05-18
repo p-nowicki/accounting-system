@@ -42,4 +42,9 @@ public class InvoiceEntry {
   public int hashCode() {
     return Objects.hash(description, price);
   }
+
+  public InvoiceEntry(String description, BigDecimal price) {
+    this.description = description;
+    this.price = price;
+  }
 }

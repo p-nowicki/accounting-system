@@ -12,7 +12,7 @@ import java.util.Map;
 public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();
-  private int id = 0;
+  private int id = 1;
 
   public int saveInvoice(Invoice invoice) {
     invoice.setId(id);

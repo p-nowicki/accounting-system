@@ -1,5 +1,6 @@
 package pl.coderstrust.accounting.logic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
@@ -13,6 +14,7 @@ public class InvoiceService {
 
   private Database database;
 
+  @Autowired
   public InvoiceService(Database database) {
     this.database = database;
   }
@@ -33,4 +35,7 @@ public class InvoiceService {
     database.removeInvoiceById(id);
   }
 
+  public Invoice getInvById(int id) throws InvoiceNotFoundException, IOException {
+    return database.getInvoiceById(id);
+  }
 }
