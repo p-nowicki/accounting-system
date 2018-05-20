@@ -3,9 +3,7 @@ package pl.coderstrust.accounting.database.impl.multifile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import pl.coderstrust.accounting.model.Invoice;
-
 import java.io.File;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
