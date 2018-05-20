@@ -36,6 +36,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -67,14 +68,14 @@ public class SqlWithDriverDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) {
+  public Optional<Invoice> getInvoiceById(int id) {
     try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INVOICE)) {
       preparedStatement.setInt(1, id);
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         if (resultSet.next() == false) {
           return null;
         }
-        return buildInvoice(resultSet);
+        return Optional.ofNullable(buildInvoice(resultSet));
       }
     } catch (SQLException ex) {
       ex.printStackTrace();

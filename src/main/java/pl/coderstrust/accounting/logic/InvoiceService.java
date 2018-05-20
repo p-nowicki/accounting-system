@@ -8,6 +8,7 @@ import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class InvoiceService {
@@ -35,7 +36,7 @@ public class InvoiceService {
     database.removeInvoiceById(id);
   }
 
-  public Invoice getInvById(int id) throws InvoiceNotFoundException, IOException {
+  public Optional<Invoice> getInvById(int id) throws InvoiceNotFoundException, IOException {
     return database.getInvoiceById(id);
   }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MultiFileDatabase implements Database {
@@ -68,7 +69,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) {
+  public Optional<Invoice> getInvoiceById(int id) {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
@@ -77,7 +78,7 @@ public class MultiFileDatabase implements Database {
     return fileInvoiceHelper.readInvoicesFromFile(file)
         .stream()
         .filter(invoice -> invoice.getId() == id)
-        .findFirst().get();
+        .findFirst();
   }
 
   @Override
