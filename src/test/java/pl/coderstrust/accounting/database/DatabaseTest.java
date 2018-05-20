@@ -7,6 +7,7 @@ import org.junit.Test;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
+
 import java.io.IOException;
 
 public abstract class DatabaseTest {
