@@ -5,12 +5,14 @@ import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.model.Invoice;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MultiFileDatabase implements Database {
@@ -67,7 +69,7 @@ public class MultiFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) {
+  public Optional<Invoice> getInvoiceById(int id) {
     if (Objects.isNull(fileCache.get(id))) {
       return null;
     }
@@ -76,7 +78,7 @@ public class MultiFileDatabase implements Database {
     return fileInvoiceHelper.readInvoicesFromFile(file)
         .stream()
         .filter(invoice -> invoice.getId() == id)
-        .findFirst().get();
+        .findFirst();
   }
 
   @Override

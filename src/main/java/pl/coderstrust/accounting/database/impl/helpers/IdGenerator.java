@@ -2,6 +2,7 @@ package pl.coderstrust.accounting.database.impl.helpers;
 
 import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
 import pl.coderstrust.accounting.model.Invoice;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,8 +15,7 @@ public class IdGenerator {
   private FileInvoiceHelper fileInvoiceHelper;
   private PathHelper pathHelper;
 
-  public IdGenerator(File databaseLocation, FileInvoiceHelper fileHelper,
-      PathHelper pathGenerator) {
+  public IdGenerator(File databaseLocation, FileInvoiceHelper fileHelper, PathHelper pathGenerator) {
     this.fileInvoiceHelper = fileHelper;
     this.pathHelper = pathGenerator;
     currentId = new AtomicInteger(getCurrentId(databaseLocation).orElseGet(() -> 0));

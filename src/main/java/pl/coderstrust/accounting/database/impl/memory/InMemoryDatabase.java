@@ -7,6 +7,7 @@ import pl.coderstrust.accounting.model.Invoice;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class InMemoryDatabase implements Database {
@@ -34,7 +35,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) {
-    return invoices.get(id);
+  public Optional<Invoice> getInvoiceById(int id) {
+    return Optional.ofNullable(invoices.get(id));
   }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
 import pl.coderstrust.accounting.helpers.TestInvoiceProvider;
 import pl.coderstrust.accounting.model.Invoice;
+
 import java.io.IOException;
 
 public abstract class DatabaseTest {
@@ -30,7 +31,7 @@ public abstract class DatabaseTest {
     assertNotNull(db.getInvoices());
     assertEquals(3, db.getInvoices().size());
 
-    Invoice result = db.getInvoiceById(0);
+    Invoice result = db.getInvoiceById(0).get();
     assertEquals(invoiceProviderOne, result);
   }
 

@@ -2,37 +2,32 @@ package pl.coderstrust.accounting.database.impl.file;
 
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
-import pl.coderstrust.accounting.database.impl.helpers.IdGeneratorForInFileDataBase;
-import pl.coderstrust.accounting.database.impl.multifile.PathHelper;
+import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
 import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public class InFileDatabase implements Database {
 
   private File databaseLocation;
   private FileInvoiceHelper fileInvoiceHelper;
-  private PathHelper pathHelper;
-  private IdGeneratorForInFileDataBase idGenerator;
-  private Map<Integer, String> fileCache;
+  private IdGenerator idGenerator;
 
-  public InFileDatabase(File databaseLocation,
-      FileInvoiceHelper fileInvoiceHelper, IdGeneratorForInFileDataBase idGenerator) {
+  public InFileDatabase(File databaseLocation, FileInvoiceHelper fileInvoiceHelper, IdGenerator idGenerator) {
     this.databaseLocation = databaseLocation;
     this.fileInvoiceHelper = fileInvoiceHelper;
     this.idGenerator = idGenerator;
   }
 
   @Override
-  public int saveInvoice(Invoice invoice)  {
+  public int saveInvoice(Invoice invoice) {
     if (invoice.getId() == 0) {
       invoice.setId(idGenerator.generateNextId());
     }
@@ -58,11 +53,11 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(int id) {
+  public Optional<Invoice> getInvoiceById(int id) {
     return fileInvoiceHelper.readInvoicesFromFile(databaseLocation)
         .stream()
-        .filter(invoice -> invoice.getId() == (id))
-        .findFirst().get();
+        .filter(invoice -> invoice.getId() == id)
+        .findFirst();
   }
 
   public void removeInvoiceById(int id) throws IOException {

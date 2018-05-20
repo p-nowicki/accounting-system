@@ -1,6 +1,7 @@
 package pl.coderstrust.accounting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,10 +36,6 @@ public class Invoice {
 
   public void setAge(int age) {
     this.age = age;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getNumber() {
@@ -83,6 +80,10 @@ public class Invoice {
 
   public Integer getId() {
     return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   @JsonIgnore

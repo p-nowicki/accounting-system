@@ -3,6 +3,7 @@ package pl.coderstrust.accounting.model;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
