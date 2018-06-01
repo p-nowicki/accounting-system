@@ -33,6 +33,12 @@ public class TestInvoiceProvider {
     invoice.setBuyer(buyer);
     invoice.setSeller(seller);
 
+    List<InvoiceEntry> list = new ArrayList();
+    invoice.setEntries(list);
+    InvoiceEntry invoiceEntry = new InvoiceEntry();
+    invoiceEntry.setPrice(BigDecimal.valueOf(1000));
+    invoiceEntry.setVatRate(VatRate.FIVE);
+
     return invoice;
   }
 
@@ -57,6 +63,12 @@ public class TestInvoiceProvider {
     invoice.setBuyer(buyer);
     invoice.setSeller(seller);
 
+    List<InvoiceEntry> list = new ArrayList();
+    invoice.setEntries(list);
+    InvoiceEntry invoiceEntry = new InvoiceEntry();
+    invoiceEntry.setPrice(BigDecimal.valueOf(350));
+    invoiceEntry.setVatRate(VatRate.TWENTY_THREE);
+
     return invoice;
   }
 
@@ -80,11 +92,13 @@ public class TestInvoiceProvider {
     invoice.setIssueDate(LocalDate.of(2017, 11, 30));
     invoice.setBuyer(buyer);
     invoice.setSeller(seller);
+
     List<InvoiceEntry> list = new ArrayList();
     invoice.setEntries(list);
     InvoiceEntry invoiceEntry = new InvoiceEntry();
     invoiceEntry.setPrice(BigDecimal.valueOf(500));
     invoiceEntry.setVatRate(VatRate.EIGHT);
+
     return invoice;
   }
 }

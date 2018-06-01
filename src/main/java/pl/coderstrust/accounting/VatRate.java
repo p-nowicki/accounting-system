@@ -8,7 +8,7 @@ public enum VatRate {
     ZERO(BigDecimal.valueOf(0)),
     FIVE(BigDecimal.valueOf(0.05)),
     EIGHT(BigDecimal.valueOf(0.08)),
-    TWENTYTHREE(BigDecimal.valueOf(0.23));
+    TWENTY_THREE(BigDecimal.valueOf(0.23));
 
     private BigDecimal vatPercent;
 
@@ -19,12 +19,5 @@ public enum VatRate {
     public BigDecimal getVatPercent() {
       return vatPercent;
     }
-    //private vatVariants(BigDecimal percent, String name) {
-    //vatPercent = percent;
-    //vatName = name;
-    //}
-
-    //private int vatCallculator() {
-    //return
   }
 

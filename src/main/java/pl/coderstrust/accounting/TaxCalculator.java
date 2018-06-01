@@ -1,23 +1,71 @@
 package pl.coderstrust.accounting;
 
+import pl.coderstrust.accounting.logic.InvoiceService;
+import pl.coderstrust.accounting.model.Invoice;
+import pl.coderstrust.accounting.model.InvoiceEntry;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Collection;
+
 public class TaxCalculator {
-  private long id;
-  private String content;
 
-  public TaxCalculator(){}
+  private InvoiceService invoiceService;
 
-  public TaxCalculator(long id, String content){
-    this.id = id;
-    this.content = content;
+  public BigDecimal getCosts() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getBuyer().getNip() == MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice());
+        }
+      }
+    }
+    return sum;
   }
 
-  public long getId() {
-    return id;
+  public BigDecimal getRevenues() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getSeller().getNip() == MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice());
+        }
+      }
+    }
+    return sum;
   }
-  public String getContent(){
-    return content;
+
+  public BigDecimal getVatOutcome() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getSeller().getNip() == MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice().multiply(entry.getVatRate().getVatPercent()));
+        }
+      }
+    }
+    return sum;
   }
- // public void setId(int id){
-   // this.id = id;
-  //}
+
+  public BigDecimal getVatIncome() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getBuyer().getNip() != MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice().multiply(entry.getVatRate().getVatPercent()));
+        }
+      }
+    }
+    return sum;
+  }
+
+  public BigDecimal getVatDifference() throws IOException {
+    BigDecimal vatDifference = getVatOutcome().subtract(getVatIncome());
+    return vatDifference;
+  }
 }

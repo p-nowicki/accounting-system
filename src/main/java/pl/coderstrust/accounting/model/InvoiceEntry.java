@@ -29,13 +29,13 @@ public class InvoiceEntry {
     this.price = price;
   }
 
-
-  //private VatRate vatRate;
-  public void setVatRate(VatRate vatRate){ this.vatRate = vatRate;
+  public void setVatRate(VatRate vatRate) {
+    this.vatRate = vatRate;
   }
-  public VatRate getVatRate() {
-    return vatRate;}
 
+  public VatRate getVatRate() {
+    return vatRate;
+  }
 
   @Override
   public boolean equals(Object other) {
