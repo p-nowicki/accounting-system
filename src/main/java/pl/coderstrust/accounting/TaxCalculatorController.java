@@ -21,14 +21,12 @@ public class TaxCalculatorController {
     this.invoiceService = invoiceService;
   }
 
-
   @GetMapping("/invoices/costs")
   public BigDecimal getCosts() throws IOException {
     Collection<Invoice> invoices = invoiceService.getInvoices();
     BigDecimal sum = BigDecimal.ZERO;
     for (Invoice invoice : invoices) {
       if (invoice.getBuyer().getNip() == MyCompany.NIP) {
-
         for (InvoiceEntry entry : invoice.getEntries()) {
           sum = sum.add(entry.getPrice());
         }
@@ -43,7 +41,6 @@ public class TaxCalculatorController {
     BigDecimal sum = BigDecimal.ZERO;
     for (Invoice invoice : invoices) {
       if (invoice.getSeller().getNip() == MyCompany.NIP) {
-
         for (InvoiceEntry entry : invoice.getEntries()) {
           sum = sum.add(entry.getPrice());
         }
@@ -52,25 +49,37 @@ public class TaxCalculatorController {
     return sum;
   }
 
-  @GetMapping("/invoices/vatOutput")
-  public BigDecimal getVatOutput() throws IOException {
-    BigDecimal vatRate = BigDecimal.valueOf(0.23);
-    BigDecimal vatOutput;
-    vatOutput = getRevenues().multiply(vatRate);
-    return vatOutput;
+  @GetMapping("/invoices/vatOutcome")
+  public BigDecimal getVatOutcome() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getSeller().getNip() == MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice().multiply(entry.getVatRate().getVatPercent()));
+        }
+      }
+    }
+    return sum;
   }
 
-  @GetMapping("/invoices/vatInput")
-  public BigDecimal getVatInput() throws IOException {
-    BigDecimal vatRate = BigDecimal.valueOf(0.23);
-    BigDecimal vatInPut;
-    vatInPut = getCosts().multiply(vatRate);
-    return vatInPut;
+  @GetMapping("/invoices/vatIncome")
+  public BigDecimal getVatIncome() throws IOException {
+    Collection<Invoice> invoices = invoiceService.getInvoices();
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Invoice invoice : invoices) {
+      if (invoice.getSeller().getNip() != MyCompany.NIP) {
+        for (InvoiceEntry entry : invoice.getEntries()) {
+          sum = sum.add(entry.getPrice().multiply(entry.getVatRate().getVatPercent()));
+        }
+      }
+    }
+    return sum;
   }
 
   @GetMapping("/invoices/vatDifference")
-    public BigDecimal vatDifference() throws IOException {
-    BigDecimal vatDifference = getVatOutput().subtract(getVatInput());
+  public BigDecimal vatDifference() throws IOException {
+    BigDecimal vatDifference = getVatOutcome().subtract(getVatIncome());
     return vatDifference;
   }
 }

@@ -1,9 +1,14 @@
 package pl.coderstrust.accounting.helpers;
 
+import pl.coderstrust.accounting.VatRate;
 import pl.coderstrust.accounting.model.Company;
 import pl.coderstrust.accounting.model.Invoice;
+import pl.coderstrust.accounting.model.InvoiceEntry;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestInvoiceProvider {
 
@@ -75,7 +80,11 @@ public class TestInvoiceProvider {
     invoice.setIssueDate(LocalDate.of(2017, 11, 30));
     invoice.setBuyer(buyer);
     invoice.setSeller(seller);
-
+    List<InvoiceEntry> list = new ArrayList();
+    invoice.setEntries(list);
+    InvoiceEntry invoiceEntry = new InvoiceEntry();
+    invoiceEntry.setPrice(BigDecimal.valueOf(500));
+    invoiceEntry.setVatRate(VatRate.EIGHT);
     return invoice;
   }
 }
