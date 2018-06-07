@@ -15,7 +15,7 @@ public class TestInvoiceProvider {
   public Invoice invoiceOne() {
     Company buyer = new Company();
     buyer.setName("YoloCompany");
-    buyer.setNip(1231231212);
+    buyer.setNip(199);
     buyer.setStreet("Warszawska 1");
     buyer.setPostCode("01-000");
     buyer.setCity("Warszawa");
@@ -35,9 +35,11 @@ public class TestInvoiceProvider {
 
     List<InvoiceEntry> list = new ArrayList();
     invoice.setEntries(list);
-    InvoiceEntry invoiceEntry = new InvoiceEntry();
-    invoiceEntry.setPrice(BigDecimal.valueOf(1000));
+    BigDecimal price = (BigDecimal.valueOf(1000));
+    String description = "abc";
+    InvoiceEntry invoiceEntry = new InvoiceEntry(description, price);
     invoiceEntry.setVatRate(VatRate.FIVE);
+    list.add(invoiceEntry);
 
     return invoice;
   }
@@ -52,7 +54,7 @@ public class TestInvoiceProvider {
 
     Company seller = new Company();
     seller.setName("AdamCompanyOne");
-    seller.setNip(2016545678);
+    seller.setNip(199);
     seller.setStreet("Krakowska 1");
     seller.setPostCode("65-999");
     seller.setCity("Poznan");
@@ -65,9 +67,11 @@ public class TestInvoiceProvider {
 
     List<InvoiceEntry> list = new ArrayList();
     invoice.setEntries(list);
-    InvoiceEntry invoiceEntry = new InvoiceEntry();
-    invoiceEntry.setPrice(BigDecimal.valueOf(350));
+    BigDecimal price = (BigDecimal.valueOf(350));
+    String description = "abc";
+    InvoiceEntry invoiceEntry = new InvoiceEntry(description, price);
     invoiceEntry.setVatRate(VatRate.TWENTY_THREE);
+    list.add(invoiceEntry);
 
     return invoice;
   }
@@ -75,7 +79,7 @@ public class TestInvoiceProvider {
   public Invoice invoiceThree() {
     Company buyer = new Company();
     buyer.setName("ABCCompany");
-    buyer.setNip(1212366991);
+    buyer.setNip(199);
     buyer.setStreet("Pawla 1");
     buyer.setPostCode("01-000");
     buyer.setCity("Warszawa");
@@ -95,9 +99,75 @@ public class TestInvoiceProvider {
 
     List<InvoiceEntry> list = new ArrayList();
     invoice.setEntries(list);
-    InvoiceEntry invoiceEntry = new InvoiceEntry();
-    invoiceEntry.setPrice(BigDecimal.valueOf(500));
+    BigDecimal price = (BigDecimal.valueOf(2500));
+    String description = "abc2";
+    InvoiceEntry invoiceEntry = new InvoiceEntry(description, price);
     invoiceEntry.setVatRate(VatRate.EIGHT);
+    list.add(invoiceEntry);
+
+    return invoice;
+  }
+
+  public Invoice invoiceFour() {
+    Company buyer = new Company();
+    buyer.setName("KamilCompanyOne");
+    buyer.setNip(1778886789);
+    buyer.setStreet("Pawla 1");
+    buyer.setPostCode("01-000");
+    buyer.setCity("Warszawa");
+
+    Company seller = new Company();
+    seller.setName("KamilCompanyOne");
+    seller.setNip(199);
+    seller.setStreet("Gdanska 1");
+    seller.setPostCode("65-999");
+    seller.setCity("Poznan");
+
+    Invoice invoice = new Invoice();
+    invoice.setNumber("FV123/3");
+    invoice.setIssueDate(LocalDate.of(2017, 11, 30));
+    invoice.setBuyer(buyer);
+    invoice.setSeller(seller);
+
+    List<InvoiceEntry> list = new ArrayList();
+    invoice.setEntries(list);
+    BigDecimal price = (BigDecimal.valueOf(1500));
+    String description = "abc2";
+    InvoiceEntry invoiceEntry = new InvoiceEntry(description, price);
+    invoiceEntry.setVatRate(VatRate.TWENTY_THREE);
+    list.add(invoiceEntry);
+
+    return invoice;
+  }
+
+  public Invoice invoiceFive() {
+    Company buyer = new Company();
+    buyer.setName("KamilCompanyOne");
+    buyer.setNip(199);
+    buyer.setStreet("Pawla 1");
+    buyer.setPostCode("01-000");
+    buyer.setCity("Warszawa");
+
+    Company seller = new Company();
+    seller.setName("KamilCompanyOne");
+    seller.setNip(199222333);
+    seller.setStreet("Gdanska 1");
+    seller.setPostCode("65-999");
+    seller.setCity("Poznan");
+
+    Invoice invoice = new Invoice();
+    invoice.setNumber("FV123/3");
+    invoice.setIssueDate(LocalDate.of(2017, 11, 30));
+    invoice.setBuyer(buyer);
+    invoice.setSeller(seller);
+
+    List<InvoiceEntry> list = new ArrayList();
+    invoice.setEntries(list);
+    BigDecimal price = (BigDecimal.valueOf(11500));
+    String description = "abc2";
+    InvoiceEntry invoiceEntry = new InvoiceEntry(description, price);
+    invoiceEntry.setVatRate(VatRate.TWENTY_THREE);
+    list.add(invoiceEntry);
 
     return invoice;
   }

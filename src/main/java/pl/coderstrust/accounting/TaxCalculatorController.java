@@ -11,12 +11,11 @@ import java.math.BigDecimal;
 @RestController
 public class TaxCalculatorController {
 
-  private InvoiceService invoiceService;
   private TaxCalculator taxCalculator;
 
   @Autowired
-  public TaxCalculatorController(InvoiceService invoiceService) {
-    this.invoiceService = invoiceService;
+  public TaxCalculatorController(TaxCalculator taxCalculator) {
+    this.taxCalculator = taxCalculator;
   }
 
   @GetMapping("/invoices/costs")

@@ -59,4 +59,7 @@ public class InvoiceEntry {
     this.description = description;
     this.price = price;
   }
+
+  public InvoiceEntry() {
+  }
 }
