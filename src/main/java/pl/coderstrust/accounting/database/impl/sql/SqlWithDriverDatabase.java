@@ -38,15 +38,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Primary
+//@Primary
 public class SqlWithDriverDatabase implements Database {
 
   Connection connection;
 
   @Autowired
   public SqlWithDriverDatabase() throws SQLException {
-    connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/coders", "postgres",
-        "postgres");
+//    connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/coders", "postgres",
+  //      "postgres");
   }
 
   @Override
