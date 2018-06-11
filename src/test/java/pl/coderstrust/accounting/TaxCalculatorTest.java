@@ -13,6 +13,7 @@ import pl.coderstrust.accounting.model.Invoice;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -58,7 +59,7 @@ public class TaxCalculatorTest {
     TestInvoiceProvider testInvoiceProvider = new TestInvoiceProvider();
     TaxCalculator taxCalculator = new TaxCalculator(invoiceService);
     BigDecimal expected = BigDecimal.valueOf(15000);
-    BigDecimal result = BigDecimal.valueOf(0);
+    BigDecimal result;
 
     Invoice invoiceOne = testInvoiceProvider.invoiceOne();
     Invoice invoiceTwo = testInvoiceProvider.invoiceTwo();
@@ -67,20 +68,8 @@ public class TaxCalculatorTest {
     Invoice invoiceFive = testInvoiceProvider.invoiceFive();
 
     //when
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceOne));
-    result = result.add(taxCalculator.getCosts());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceTwo));
-    result = result.add(taxCalculator.getCosts());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceThree));
-    result = result.add(taxCalculator.getCosts());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFour));
-    result = result.add(taxCalculator.getCosts());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFive));
-    result = result.add(taxCalculator.getCosts());
+    when(invoiceService.getInvoices()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo, invoiceThree, invoiceFour, invoiceFive));
+    result = taxCalculator.getCosts();
 
     //then
     assertEquals(expected, result);
@@ -124,7 +113,7 @@ public class TaxCalculatorTest {
     TestInvoiceProvider testInvoiceProvider = new TestInvoiceProvider();
     TaxCalculator taxCalculator = new TaxCalculator(invoiceService);
     BigDecimal expected = BigDecimal.valueOf(1850);
-    BigDecimal result = BigDecimal.valueOf(0);
+    BigDecimal result;
 
     Invoice invoiceOne = testInvoiceProvider.invoiceOne();
     Invoice invoiceTwo = testInvoiceProvider.invoiceTwo();
@@ -133,20 +122,8 @@ public class TaxCalculatorTest {
     Invoice invoiceFive = testInvoiceProvider.invoiceFive();
 
     //when
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceOne));
-    result = result.add(taxCalculator.getRevenues());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceTwo));
-    result = result.add(taxCalculator.getRevenues());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceThree));
-    result = result.add(taxCalculator.getRevenues());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFour));
-    result = result.add(taxCalculator.getRevenues());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFive));
-    result = result.add(taxCalculator.getRevenues());
+    when(invoiceService.getInvoices()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo, invoiceThree, invoiceFour, invoiceFive));
+    result = taxCalculator.getRevenues();
 
     //then
     assertEquals(expected, result);
@@ -207,7 +184,7 @@ public class TaxCalculatorTest {
     TestInvoiceProvider testInvoiceProvider = new TestInvoiceProvider();
     TaxCalculator taxCalculator = new TaxCalculator(invoiceService);
     BigDecimal expected = BigDecimal.valueOf(425.50).setScale(2);
-    BigDecimal result = BigDecimal.valueOf(0);
+    BigDecimal result;
 
     Invoice invoiceOne = testInvoiceProvider.invoiceOne();
     Invoice invoiceTwo = testInvoiceProvider.invoiceTwo();
@@ -216,20 +193,8 @@ public class TaxCalculatorTest {
     Invoice invoiceFive = testInvoiceProvider.invoiceFive();
 
     //when
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceOne));
-    result = result.add(taxCalculator.getVatOutcome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceTwo));
-    result = result.add(taxCalculator.getVatOutcome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceThree));
-    result = result.add(taxCalculator.getVatOutcome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFour));
-    result = result.add(taxCalculator.getVatOutcome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFive));
-    result = result.add(taxCalculator.getVatOutcome());
+    when(invoiceService.getInvoices()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo, invoiceThree, invoiceFour, invoiceFive));
+    result = taxCalculator.getVatOutcome();
 
     //then
     assertEquals(expected, result);
@@ -290,7 +255,7 @@ public class TaxCalculatorTest {
     TestInvoiceProvider testInvoiceProvider = new TestInvoiceProvider();
     TaxCalculator taxCalculator = new TaxCalculator(invoiceService);
     BigDecimal expected = BigDecimal.valueOf(2895).setScale(2);
-    BigDecimal result = BigDecimal.valueOf(0);
+    BigDecimal result;
 
     Invoice invoiceOne = testInvoiceProvider.invoiceOne();
     Invoice invoiceTwo = testInvoiceProvider.invoiceTwo();
@@ -299,20 +264,8 @@ public class TaxCalculatorTest {
     Invoice invoiceFive = testInvoiceProvider.invoiceFive();
 
     //when
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceOne));
-    result = result.add(taxCalculator.getVatIncome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceTwo));
-    result = result.add(taxCalculator.getVatIncome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceThree));
-    result = result.add(taxCalculator.getVatIncome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFour));
-    result = result.add(taxCalculator.getVatIncome());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFive));
-    result = result.add(taxCalculator.getVatIncome());
+    when(invoiceService.getInvoices()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo, invoiceThree, invoiceFour, invoiceFive));
+    result = taxCalculator.getVatIncome();
 
     //then
     assertEquals(expected, result);
@@ -373,7 +326,7 @@ public class TaxCalculatorTest {
     TestInvoiceProvider testInvoiceProvider = new TestInvoiceProvider();
     TaxCalculator taxCalculator = new TaxCalculator(invoiceService);
     BigDecimal expected = BigDecimal.valueOf(-2469.50).setScale(2);
-    BigDecimal result = BigDecimal.valueOf(0);
+    BigDecimal result;
 
     Invoice invoiceOne = testInvoiceProvider.invoiceOne();
     Invoice invoiceTwo = testInvoiceProvider.invoiceTwo();
@@ -382,20 +335,8 @@ public class TaxCalculatorTest {
     Invoice invoiceFive = testInvoiceProvider.invoiceFive();
 
     //when
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceOne));
-    result = result.add(taxCalculator.getVatDifference());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceTwo));
-    result = result.add(taxCalculator.getVatDifference());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceThree));
-    result = result.add(taxCalculator.getVatDifference());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFour));
-    result = result.add(taxCalculator.getVatDifference());
-
-    when(invoiceService.getInvoices()).thenReturn(Collections.singleton(invoiceFive));
-    result = result.add(taxCalculator.getVatDifference());
+    when(invoiceService.getInvoices()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo, invoiceThree, invoiceFour, invoiceFive));
+    result = taxCalculator.getVatDifference();
 
     //then
     assertEquals(expected, result);
