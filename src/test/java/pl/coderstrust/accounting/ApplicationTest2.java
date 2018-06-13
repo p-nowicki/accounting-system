@@ -41,6 +41,8 @@ public class ApplicationTest2 {
   public void shouldReturnDefaultMessage() throws Exception {
     Invoice invoice = new Invoice();
 
+    invoice.setNumber("FV 324/12/2018");
+
     when(invoceService.getInvoices()).thenReturn(Arrays.asList(invoice));
 
     mockMvc

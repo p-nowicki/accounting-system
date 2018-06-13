@@ -1,5 +1,6 @@
 package pl.coderstrust.accounting.database.impl.memory;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
+@Primary
 public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();
