@@ -70,7 +70,7 @@ public class InvoiceController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+  public ResponseEntity<?> removeInvoiceById(@PathVariable int id) throws InvoiceNotFoundException, IOException {
 
     Optional<Invoice> invoiceOptional = invoiceService.getInvoices().stream()
         .filter(invoice -> invoice.getId().equals(id)).findAny();
