@@ -1,5 +1,7 @@
 package pl.coderstrust.accounting.model;
 
+import pl.coderstrust.accounting.VatRate;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,6 +10,8 @@ public class InvoiceEntry {
   private String description;
 
   private BigDecimal price;
+
+  private VatRate vatRate;
 
   public String getDescription() {
     return description;
@@ -23,6 +27,14 @@ public class InvoiceEntry {
 
   public void setPrice(BigDecimal price) {
     this.price = price;
+  }
+
+  public void setVatRate(VatRate vatRate) {
+    this.vatRate = vatRate;
+  }
+
+  public VatRate getVatRate() {
+    return vatRate;
   }
 
   @Override
@@ -46,5 +58,8 @@ public class InvoiceEntry {
   public InvoiceEntry(String description, BigDecimal price) {
     this.description = description;
     this.price = price;
+  }
+
+  public InvoiceEntry() {
   }
 }
