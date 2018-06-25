@@ -2,11 +2,18 @@ package pl.coderstrust.accounting.model;
 
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "company")
 public class Company {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
   @NotBlank
   private String name;
@@ -63,25 +70,35 @@ public class Company {
     this.city = city;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   @Override
-  public boolean equals(Object other) {
-    if (this == other) {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (other == null || getClass() != other.getClass()) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Company company = (Company) other;
-    return nip == company.nip
-        && Objects.equals(name, company.name)
-        && Objects.equals(street, company.street)
-        && Objects.equals(postCode, company.postCode)
-        && Objects.equals(city, company.city);
+    Company company = (Company) o;
+    return id == company.id &&
+        nip == company.nip &&
+        Objects.equals(name, company.name) &&
+        Objects.equals(street, company.street) &&
+        Objects.equals(postCode, company.postCode) &&
+        Objects.equals(city, company.city);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, nip, street, postCode, city);
+
+    return Objects.hash(id, name, nip, street, postCode, city);
   }
 
   @Override
