@@ -7,19 +7,38 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 public class Invoice {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+
+  @NotNull
   private String number;
+
+  @NotNull
   private String name;
+
+  @NotNull
   private int age;
 
+  @NotNull
   private LocalDate issueDate;
 
+  @ManyToOne
   private Company buyer;
+
+  @ManyToOne
   private Company seller;
 
+  @OneToMany
   private List<InvoiceEntry> entries = new ArrayList<>();
 
   public String getName() {

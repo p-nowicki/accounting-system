@@ -1,13 +1,26 @@
 package pl.coderstrust.accounting.model;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+@Entity(name = "company")
 public class Company {
 
+  @NotBlank
   private String name;
+
+  @NotNull
   private int nip;
+
+  @NotBlank
   private String street;
+
+  @NotBlank
   private String postCode;
+
+  @NotBlank
   private String city;
 
   public String getName() {

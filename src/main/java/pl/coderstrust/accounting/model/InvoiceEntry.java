@@ -4,13 +4,22 @@ import pl.coderstrust.accounting.VatRate;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 
+@Entity(name = "invoice_entry")
 public class InvoiceEntry {
 
+  @NotNull
   private String description;
 
+  @NotNull
   private BigDecimal price;
 
+  @NotNull
+  @Enumerated(EnumType.STRING)
   private VatRate vatRate;
 
   public String getDescription() {
