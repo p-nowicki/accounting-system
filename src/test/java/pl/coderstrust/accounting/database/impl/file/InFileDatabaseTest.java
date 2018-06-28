@@ -26,7 +26,7 @@ public class InFileDatabaseTest {
   @Before
   public void shouldRemoveFileBeforeTest() {
     file.delete();
-    inFileDatabase = new InFileDatabase(file);
+    inFileDatabase = new InFileDatabase(file.getAbsolutePath());
   }
 
   @Test
