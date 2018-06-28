@@ -1,5 +1,9 @@
 package pl.coderstrust.accounting.database.impl.file;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.impl.helpers.FileHelper;
 import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
@@ -16,6 +20,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "infile")
+@Repository
 public class InFileDatabase implements Database {
 
   private File databaseLocation;
@@ -24,16 +30,9 @@ public class InFileDatabase implements Database {
   private IdGenerator idGenerator;
   private int id;// TODO reuse IdGenerator from multifileDatabase
 
-  public InFileDatabase(File databaseLocation,
-      FileInvoiceHelper fileInvoiceHelper, IdGenerator idGenerator) {
-    this.databaseLocation = databaseLocation;
-    this.fileInvoiceHelper = fileInvoiceHelper;
-    this.idGenerator = idGenerator;
-  }
-
   // TODO this class can be part some specific behaviour of multifileDatabase - just writing to single file
-  InFileDatabase(File databaseLocation) {
-    this.databaseLocation = databaseLocation;
+    InFileDatabase(@Value("databaselocation") String databaseLocation) {
+    this.databaseLocation = new File(databaseLocation);
     id = getInvoices() // TODO reuse method from multifile (id generator)
         .stream()
         .max(Comparator.comparing(Invoice::getId))

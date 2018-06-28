@@ -11,9 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.validation.constraints.Past.List;
 
-@ConditionalOnProperty(prefix = "pl.coderstrust.accounting.database", name = "memory", havingValue = "true")
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "inmemory")
 @Repository
-@Primary
 public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();

@@ -19,6 +19,7 @@ import static pl.coderstrust.accounting.database.impl.sql.TableLabels.NIP;
 import static pl.coderstrust.accounting.database.impl.sql.TableLabels.PRICE;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
@@ -37,6 +38,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "sql")
 @Repository
 //@Primary
 public class SqlWithDriverDatabase implements Database {
