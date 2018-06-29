@@ -1,8 +1,6 @@
 package pl.coderstrust.accounting.database.impl.hibernate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.exceptions.InvoiceNotFoundException;
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Repository
-@Primary
 public class HibernateDatabase implements Database {
 
   private InvoiceRepository invoiceRepository;
@@ -31,14 +28,14 @@ public class HibernateDatabase implements Database {
   }
 
   @Override
-  public int saveInvoice(Invoice invoice) throws IOException {
+  public int saveInvoice(Invoice invoice) {
     addCompanyIfNotExists(invoice.getSeller());
     addCompanyIfNotExists(invoice.getBuyer());
     return invoiceRepository.save(invoice).getId();
   }
 
   @Override
-  public Collection<Invoice> getInvoices() throws IOException {
+  public Collection<Invoice> getInvoices() {
     return StreamSupport.stream(invoiceRepository
         .findAll()
         .spliterator(), false)
@@ -46,7 +43,7 @@ public class HibernateDatabase implements Database {
   }
 
   @Override
-  public void updateInvoice(int id, Invoice invoice) throws InvoiceNotFoundException, IOException {}
+  public void updateInvoice(int id, Invoice invoice) {}
 
   @Override
   public Invoice getInvoiceById(int id) throws IOException {
@@ -54,7 +51,7 @@ public class HibernateDatabase implements Database {
   }
 
   @Override
-  public void removeInvoiceById(int id) throws InvoiceNotFoundException, IOException {
+  public void removeInvoiceById(int id) throws InvoiceNotFoundException {
     ifInvoiceNotFoundThrowException(id);
 
     invoiceEntryRepository.deleteAll(invoiceRepository.findById(id).get().getEntries());

@@ -20,7 +20,6 @@ import static pl.coderstrust.accounting.database.impl.sql.TableLabels.PRICE;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.impl.sql.mapper.ResultSetToInvoiceMapper;
@@ -30,7 +29,6 @@ import pl.coderstrust.accounting.model.InvoiceEntry;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
