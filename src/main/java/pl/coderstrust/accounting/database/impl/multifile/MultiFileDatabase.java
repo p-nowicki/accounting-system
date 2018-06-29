@@ -1,5 +1,7 @@
 package pl.coderstrust.accounting.database.impl.multifile;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.database.impl.helpers.FileInvoiceHelper;
 import pl.coderstrust.accounting.database.impl.helpers.IdGenerator;
@@ -14,6 +16,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "multifile")
+@Repository
 public class MultiFileDatabase implements Database {
 
   private FileInvoiceHelper fileInvoiceHelper;
