@@ -38,6 +38,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "sql")
 @Repository
 public class SqlWithDriverDatabase implements Database {
 

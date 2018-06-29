@@ -1,5 +1,7 @@
 package pl.coderstrust.accounting.database.impl.memory;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.database.Database;
 import pl.coderstrust.accounting.model.Invoice;
@@ -8,6 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@ConditionalOnProperty(name = "pl.coderstrust.accounting.database", havingValue = "inmemory")
 @Repository
 public class InMemoryDatabase implements Database {
 
