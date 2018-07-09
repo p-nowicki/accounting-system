@@ -2,6 +2,7 @@ package pl.coderstrust.accounting.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +19,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 
-@RestController
 @RequestMapping("/invoices")
+@RestController
+@CrossOrigin
 public class InvoiceController {
 
   // TODO - add validator - class which is checking if provided invoice is the correct one
