@@ -81,10 +81,10 @@
               <goal>check</goal>
             </goals>
             <configuration>
-                <excludes>
-                  <exclude>pl/coderstrust/accounting/database/impl/sql/*</exclude>
-                  <exclude>pl/coderstrust/accounting/builders/*</exclude>
-                </excludes>
+              <excludes>
+                <exclude>pl/coderstrust/accounting/database/impl/sql/*</exclude>
+                <exclude>pl/coderstrust/accounting/builders/*</exclude>
+              </excludes>
               <rules>
                 <rule>
                   <element>BUNDLE</element>
@@ -213,7 +213,7 @@
       <version>2.7.0</version>
     </dependency>
     <dependency>
-        <groupId>postgresql</groupId>
+      <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.1-901-1.jdbc4</version>
     </dependency>
